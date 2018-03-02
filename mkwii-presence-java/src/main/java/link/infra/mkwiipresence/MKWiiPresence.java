@@ -41,18 +41,7 @@ public class MKWiiPresence {
 	}
 	
 	public void processResponse(String json) {
-		WiimmMessage[] messages = WiimmMessages.deserialize("[{\n" + 
-				"    \"type\": \"room\",\n" + 
-				"    \"room_id\": 499734,\n" + 
-				"    \"room_name\": \"KF34\",\n" + 
-				"    \"game_id4\": \"RMCJ\",\n" + 
-				"    \"is_mkw\": 1,\n" + 
-				"    \"ol_status\": 373,\n" + 
-				"    \"ol_status_x\": \"o-G-wAR-h----\",\n" + 
-				"    \"room_start\": 1518472562,\n" + 
-				"    \"race_start\": 1518475418,\n" + 
-				"    \"n_races\": 11}]");
-		
+		WiimmMessage[] messages = WiimmMessages.deserialize(json);
 		for (int i = 0; i < messages.length; i++) {
 			if (messages[i] instanceof WiimmRoom) {
 				PresenceUpdater.update(new PresenceMessage((WiimmRoom) messages[i], currentSettings));

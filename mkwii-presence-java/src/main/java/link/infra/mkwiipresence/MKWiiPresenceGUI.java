@@ -174,7 +174,7 @@ public class MKWiiPresenceGUI {
 		cbxVRBR.setSelected(true);
 		pnlStateLine.add(cbxVRBR);
 		
-		JCheckBox cbxDiscrepencyVRBR = new JCheckBox("Disply discrepancy in VR/BR");
+		JCheckBox cbxDiscrepencyVRBR = new JCheckBox("Display discrepancy in VR/BR");
 		pnlStateLine.add(cbxDiscrepencyVRBR);
 		
 		JCheckBox cbxPlayersInRoom = new JCheckBox("Display number of players in room");

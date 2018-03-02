@@ -9,6 +9,9 @@ public class PresenceMessage {
 	public String detailsLine;
 	public String stateLine;
 	public Date startTimestamp;
+	// Abuse of statics
+	public static int previousVR;
+	public static int previousBR;
 	
 
 	public PresenceMessage(WiimmRoom room, PresenceSettings settings) {
@@ -36,7 +39,21 @@ public class PresenceMessage {
 			}
 		}
 		if (settings.displayDiscrepancyVRBR == true) {
+			int versusDiscr = 0;
+			int battleDiscr = 0;
+			if (previousVR == 0) {
+				previousVR = member.versusPoints;
+			} else {
+				versusDiscr = member.versusPoints - previousVR;
+			}
 			
+			if (previousBR == 0) {
+				previousBR = member.battlePoints;
+			} else {
+				battleDiscr = member.battlePoints - previousBR;
+			}
+			
+			// TODO format and add
 		}
 
 	}

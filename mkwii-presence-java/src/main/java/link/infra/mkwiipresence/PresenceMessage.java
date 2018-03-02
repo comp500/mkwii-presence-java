@@ -10,6 +10,9 @@ public class PresenceMessage {
 	public String detailsLine;
 	public String stateLine;
 	public Date startTimestamp;
+	public String largeImageKey;
+	public String smallImageKey;
+	
 	// Abuse of statics
 	public static int previousVR;
 	public static int previousBR;
@@ -59,9 +62,17 @@ public class PresenceMessage {
 			}
 			
 			if (member.gameRegion.contains("bt")) {
-				stateArray.add(String.format("%d BR", member.battlePoints));
+				if (battleDiscr > 0) {
+					stateArray.add(String.format("[+%d]", battleDiscr));
+				} else {
+					stateArray.add(String.format("[%d]", battleDiscr));
+				}							
 			} else {
-				stateArray.add(String.format("%d BR", member.versusPoints));
+				if (versusDiscr > 0) {
+					stateArray.add(String.format("[+%d]", versusDiscr));
+				} else {
+					stateArray.add(String.format("[%d]", versusDiscr));
+				}			
 			}
 		}
 		if (settings.displayNumPlayers == true) {

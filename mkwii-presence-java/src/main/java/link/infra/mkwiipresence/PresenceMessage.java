@@ -15,8 +15,10 @@ public class PresenceMessage {
 	public static int previousBR;
 	
 	//	Let's store stuff!
-	ArrayList<String> data = new ArrayList<String>();
+	ArrayList<String> detailsArray = new ArrayList<String>();
+	ArrayList<String> stateArray = new ArrayList<String>();
 	
+	@SuppressWarnings("unused")
 	public PresenceMessage(WiimmRoom room, PresenceSettings settings) {
 		WiimmMember member = room.getPlayer(settings.friendCode);
 		
@@ -25,20 +27,20 @@ public class PresenceMessage {
 		}
 		
 		if (settings.displayMiiName == true) {
-			data.add(String.format("%d", member.names[0]));
+			detailsArray.add(String.format("%d", member.names[0]));
 		}
 		if (settings.displayFriendCode == true) {
-			data.add(String.format(" (%d)", member.friendCode));
+			detailsArray.add(String.format("[%d]", member.friendCode));
 		}
 		if (settings.displayRegion == true) {
-			data.add(String.format(" (%d)", member.userRegion));
+			detailsArray.add(String.format("[%d]", member.userRegion));
 		}
 		
 		if (settings.displayVRBR == true) {
 			if (member.gameRegion.contains("bt")) {
-				data.add(String.format("%d BR", member.battlePoints));
+				stateArray.add(String.format("%d BR", member.battlePoints));
 			} else {
-				data.add(String.format("%d VR", member.versusPoints));
+				stateArray.add(String.format("%d VR", member.versusPoints));
 			}
 		}
 		if (settings.displayDiscrepancyVRBR == true) {
@@ -57,19 +59,19 @@ public class PresenceMessage {
 			}
 			
 			if (member.gameRegion.contains("bt")) {
-				data.add(String.format("%d BR", member.battlePoints));
+				stateArray.add(String.format("%d BR", member.battlePoints));
 			} else {
-				data.add(String.format("%d BR", member.versusPoints));
+				stateArray.add(String.format("%d BR", member.versusPoints));
 			}
 		}
 		if (settings.displayNumPlayers == true) {
-			data.add(String.format("%d players in room", room.numberOfPlayers));
+			stateArray.add(String.format("[%d players in room]", room.numberOfPlayers));
 		}
 		if (settings.displayNumRaces == true) {
 			if (member.userRaces == 1) {
-				data.add(String.format("%d race played", member.userRaces));
+				stateArray.add(String.format("[%d race played]", member.userRaces));
 			} else {
-				data.add(String.format("%d races played", member.userRaces));
+				stateArray.add(String.format("[%d races played]", member.userRaces));
 			}
 			
 		}
@@ -77,14 +79,35 @@ public class PresenceMessage {
 		if (settings.timerSetting == PresenceSettings.TimerSettingType.TIMEINRACE) {
 			startTimestamp = room.raceStart;
 		}
+		
 		if (settings.timerSetting == PresenceSettings.TimerSettingType.TIMEINROOM) {
-			Date roomTime = new Date(0);
+			Date roomTime = null;
+			
+			//If no room, stop timer
 			if (room.raceStart == null) {
 				startTimestamp = null;
 			}
 			
+			if (roomTime == null) {
+				roomTime = new Date(System.currentTimeMillis() * 1000);
+			} else {
+				startTimestamp = roomTime;
+			}
 			
 		}
+		
+		if (settings.timerSetting == PresenceSettings.TimerSettingType.OVERALLTIME) {
+			Date gameTime = null;
+			
+			if (gameTime == null) {
+				gameTime = new Date(System.currentTimeMillis() * 1000);
+			} else {
+				startTimestamp = gameTime;
+			}
+		}
+		
+		detailsLine = String.join(" ", detailsArray);
+		stateLine = String.join(" ", stateArray);
 
 	}
 	

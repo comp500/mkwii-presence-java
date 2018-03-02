@@ -66,9 +66,15 @@ public class WiimmMessages {
 		@SerializedName("fc")
 		public String friendCode;
 		public String[] names;
+		@SerializedName("rk")
+		public String gameRegion;
+		@SerializedName("ev")
+		public int versusPoints;
+		@SerializedName("eb")
+		public int battlePoints;
 	}
 
-	public static WiimmMessage deserialize(String json) {
+	public static WiimmMessage[] deserialize(String json) {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 
 		gsonBuilder.registerTypeAdapter(WiimmMessage.class, new MessageDeserializer());
@@ -79,8 +85,7 @@ public class WiimmMessages {
 			}
 		});
 		Gson gson = gsonBuilder.create();
-
-		WiimmMessage message = gson.fromJson(json, WiimmMessage.class);
-		return message;
+		
+		return gson.fromJson(json, WiimmMessage[].class);
 	}
 }

@@ -22,10 +22,12 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.Color;
 
 public class MKWiiPresenceWindow {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField txtFriendcode;
 	private JTextField txtFriendcode_1;
 	private JTextField txtFriendcode_2;
@@ -64,7 +66,7 @@ public class MKWiiPresenceWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 513, 376);
+		frame.setBounds(100, 100, 600, 420);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -78,11 +80,8 @@ public class MKWiiPresenceWindow {
 		lblUserSettings.setBorder(new EmptyBorder(10, 10, 10, 10));
 		panel.add(lblUserSettings);
 		
-		JLabel lblFriendCode = new JLabel("Friend Code");
-		lblFriendCode.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		panel.add(lblFriendCode);
-		
 		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(new TitledBorder(null, "Friend Code", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.add(panel_4);
 		
 		txtFriendcode = new JTextField();
@@ -107,6 +106,7 @@ public class MKWiiPresenceWindow {
 		panel.add(panel_3);
 		
 		JSlider slider = new JSlider();
+		slider.setBorder(null);
 		slider.setMinimum(5);
 		slider.setMaximum(20);
 		slider.setMinorTickSpacing(1);
@@ -122,10 +122,6 @@ public class MKWiiPresenceWindow {
 	    table.put(5, new JLabel("Very Fast (5 seconds)"));
 	    slider.setLabelTable(table);
 		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.Y_AXIS));
-		
-		JLabel lblUpdateRate = new JLabel("Update Rate");
-		lblUpdateRate.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		panel_3.add(lblUpdateRate);
 		panel_3.add(slider);
 		
 		JPanel panel_1 = new JPanel();
@@ -211,7 +207,7 @@ public class MKWiiPresenceWindow {
 				
 			}
 		});
-		panel_2.add(btnBeginRichPresence, BorderLayout.WEST);
+		panel_2.add(btnBeginRichPresence, BorderLayout.CENTER);
 		
 		JLabel lblStatusIdle = new JLabel("Status: Idle");
 		lblStatusIdle.setBorder(new EmptyBorder(10, 10, 10, 10));

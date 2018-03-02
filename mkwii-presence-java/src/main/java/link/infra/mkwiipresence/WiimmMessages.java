@@ -72,6 +72,8 @@ public class WiimmMessages {
 		public int versusPoints;
 		@SerializedName("eb")
 		public int battlePoints;
+		@SerializedName("region")
+		public String userRegion;
 	}
 
 	public static WiimmMessage[] deserialize(String json) {

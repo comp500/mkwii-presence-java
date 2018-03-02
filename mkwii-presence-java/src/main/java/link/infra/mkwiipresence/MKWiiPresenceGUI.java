@@ -40,6 +40,16 @@ public class MKWiiPresenceGUI {
 	private JPanel pnlDetailsLine;
 	private JPanel pnlElapsedTimer;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JCheckBox cbxDiscrepencyVRBR;
+	private JCheckBox cbxPlayersInRoom;
+	private JCheckBox chckbxDisplayNumberOf;
+	private JCheckBox cbxMiiName;
+	private JCheckBox cbxFriendCode;
+	private JCheckBox cbxRegion;
+	private JCheckBox cbxVRBR;
+	private JRadioButton rbtTimeInRoom;
+	private JRadioButton rbtTimeInRace;
+	private JRadioButton rbtTimeOverall;
 
 	/**
 	 * Launch the application.
@@ -160,15 +170,15 @@ public class MKWiiPresenceGUI {
 		frmSuperCoolRich.getContentPane().add(pnlDetailsLine);
 		pnlDetailsLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
-		JCheckBox cbxMiiName = new JCheckBox("Display Mii name");
+		cbxMiiName = new JCheckBox("Display Mii name");
 		cbxMiiName.setSelected(true);
 		pnlDetailsLine.add(cbxMiiName);
 		
-		JCheckBox cbxFriendCode = new JCheckBox("Display friend code");
+		cbxFriendCode = new JCheckBox("Display friend code");
 		cbxFriendCode.setSelected(true);
 		pnlDetailsLine.add(cbxFriendCode);
 		
-		JCheckBox cbxRegion = new JCheckBox("Display your region");
+		cbxRegion = new JCheckBox("Display your region");
 		pnlDetailsLine.add(cbxRegion);
 		
 		JPanel pnlStateLine = new JPanel();
@@ -177,18 +187,18 @@ public class MKWiiPresenceGUI {
 		frmSuperCoolRich.getContentPane().add(pnlStateLine);
 		pnlStateLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
-		JCheckBox cbxVRBR = new JCheckBox("Display VR/BR");
+		cbxVRBR = new JCheckBox("Display VR/BR");
 		cbxVRBR.setSelected(true);
 		pnlStateLine.add(cbxVRBR);
 		
-		JCheckBox cbxDiscrepencyVRBR = new JCheckBox("Display discrepancy in VR/BR");
+		cbxDiscrepencyVRBR = new JCheckBox("Display discrepancy in VR/BR");
 		pnlStateLine.add(cbxDiscrepencyVRBR);
 		
-		JCheckBox cbxPlayersInRoom = new JCheckBox("Display number of players in room");
+		cbxPlayersInRoom = new JCheckBox("Display number of players in room");
 		cbxPlayersInRoom.setSelected(true);
 		pnlStateLine.add(cbxPlayersInRoom);
 		
-		JCheckBox chckbxDisplayNumberOf = new JCheckBox("Display number of races played");
+		chckbxDisplayNumberOf = new JCheckBox("Display number of races played");
 		pnlStateLine.add(chckbxDisplayNumberOf);
 		
 		pnlElapsedTimer = new JPanel();
@@ -197,16 +207,16 @@ public class MKWiiPresenceGUI {
 		frmSuperCoolRich.getContentPane().add(pnlElapsedTimer);
 		pnlElapsedTimer.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
-		JRadioButton rbtTimeInRoom = new JRadioButton("Display time in room (changes per room)");
+		rbtTimeInRoom = new JRadioButton("Display time in room (changes per room)");
 		buttonGroup.add(rbtTimeInRoom);
 		pnlElapsedTimer.add(rbtTimeInRoom);
 		
-		JRadioButton rbtTimeInRace = new JRadioButton("Display time for each race");
+		rbtTimeInRace = new JRadioButton("Display time for each race");
 		buttonGroup.add(rbtTimeInRace);
 		rbtTimeInRace.setSelected(true);
 		pnlElapsedTimer.add(rbtTimeInRace);
 		
-		JRadioButton rbtTimeOverall = new JRadioButton("Display overall play time");
+		rbtTimeOverall = new JRadioButton("Display overall play time");
 		buttonGroup.add(rbtTimeOverall);
 		pnlElapsedTimer.add(rbtTimeOverall);
 		
@@ -234,5 +244,29 @@ public class MKWiiPresenceGUI {
 		lblPreviewImage.setIcon(new ImageIcon(wPic));
 		lblPreviewImage.setBounds(55, 417, 64, 64);
 		frmSuperCoolRich.getContentPane().add(lblPreviewImage);
+	}
+	
+	public PresenceSettings getSettings() {
+		PresenceSettings settings = new PresenceSettings();
+		
+		settings.displayMiiName = cbxMiiName.isSelected();
+		settings.displayFriendCode = cbxFriendCode.isSelected();
+		settings.displayRegion = cbxRegion.isSelected();
+		settings.displayVRBR = cbxVRBR.isSelected();
+		settings.displayDiscrepancyVRBR = cbxDiscrepencyVRBR.isSelected();
+		settings.displayNumPlayers = cbxPlayersInRoom.isSelected();
+		settings.displayNumRaces = chckbxDisplayNumberOf.isSelected();
+		
+		if (rbtTimeInRoom.isSelected()) {
+			settings.timerSetting = PresenceSettings.TimerSettingType.TIMEINROOM;
+		} else if (rbtTimeInRace.isSelected()) {
+			settings.timerSetting = PresenceSettings.TimerSettingType.TIMEFORRACE;
+		} else if (rbtTimeOverall.isSelected()) {
+			settings.timerSetting = PresenceSettings.TimerSettingType.OVERALLTIME;
+		}
+		
+		// TODO friend code and update rate
+		
+		return settings;
 	}
 }

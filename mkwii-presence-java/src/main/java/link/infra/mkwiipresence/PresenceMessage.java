@@ -10,8 +10,17 @@ public class PresenceMessage {
 	public Date startTimestamp;
 
 	public PresenceMessage(WiimmRoom room, PresenceSettings settings) {
-		// TODO parse data from `room` with settings from `settings`,
-		// and put into detailsLine, stateLine and startTimestamp
+		
+	}
+	
+	public static void ConvertFriendCodeToPID(long fc) {
+		String hex;
+		long pid;
+		
+		hex = Long.toHexString(fc);
+		hex = hex.substring(hex.length() - 8, 8);
+		pid = Long.parseLong(hex, 16);
+		System.out.println(pid);
 	}
 
 }

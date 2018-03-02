@@ -38,4 +38,20 @@ public class MKWiiPresence {
 			}
 		}
 	}
+	
+	public void requestNewPresence() {
+		try {
+			if (currentSettings.friendCode != null && currentSettings.friendCode.length() == 12) {
+				String friendCodeNumbers = currentSettings.friendCode.replace("-", "");
+				long friendCode = Long.parseLong(friendCodeNumbers);
+				int playerId = PresenceMessage.ConvertFriendCodeToPID(friendCode);
+				String json = WiimmRequester.requestRoomInfo(playerId);
+				processResponse(json);
+			} else {
+				System.out.println("WARN: friend code not set");
+			}
+		} catch (Exception e) {
+			showError(e);
+		}
+	}
 }

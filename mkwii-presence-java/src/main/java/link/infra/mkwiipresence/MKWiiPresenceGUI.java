@@ -26,6 +26,7 @@ import javax.swing.JSlider;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.ButtonGroup;
 
 public class MKWiiPresenceGUI {
 
@@ -42,6 +43,7 @@ public class MKWiiPresenceGUI {
 	private JLabel lblRichPresenceSettings;
 	private JPanel pnlDetailsLine;
 	private JPanel pnlElapsedTimer;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -127,6 +129,7 @@ public class MKWiiPresenceGUI {
 		pnlUpdateRate.add(slider);
 		
 		pnlUpdateLabels = new JPanel();
+		pnlUpdateLabels.setBorder(null);
 		pnlUpdateLabels.setBounds(76, 16, 97, 244);
 		pnlUpdateRate.add(pnlUpdateLabels);
 		pnlUpdateLabels.setLayout(null);
@@ -159,9 +162,11 @@ public class MKWiiPresenceGUI {
 		pnlDetailsLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
 		JCheckBox cbxMiiName = new JCheckBox("Display Mii name");
+		cbxMiiName.setSelected(true);
 		pnlDetailsLine.add(cbxMiiName);
 		
 		JCheckBox cbxFriendCode = new JCheckBox("Display friend code");
+		cbxFriendCode.setSelected(true);
 		pnlDetailsLine.add(cbxFriendCode);
 		
 		JCheckBox cbxRegion = new JCheckBox("Display your region");
@@ -174,12 +179,14 @@ public class MKWiiPresenceGUI {
 		pnlStateLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
 		JCheckBox cbxVRBR = new JCheckBox("Display VR/BR");
+		cbxVRBR.setSelected(true);
 		pnlStateLine.add(cbxVRBR);
 		
 		JCheckBox cbxDiscrepencyVRBR = new JCheckBox("Disply discrepancy in VR/BR");
 		pnlStateLine.add(cbxDiscrepencyVRBR);
 		
 		JCheckBox cbxPlayersInRoom = new JCheckBox("Display number of players in room");
+		cbxPlayersInRoom.setSelected(true);
 		pnlStateLine.add(cbxPlayersInRoom);
 		
 		JCheckBox chckbxDisplayNumberOf = new JCheckBox("Display number of races played");
@@ -192,12 +199,16 @@ public class MKWiiPresenceGUI {
 		pnlElapsedTimer.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
 		JRadioButton rbtTimeInRoom = new JRadioButton("Display time in room (changes per room)");
+		buttonGroup.add(rbtTimeInRoom);
 		pnlElapsedTimer.add(rbtTimeInRoom);
 		
 		JRadioButton rbtTimeInRace = new JRadioButton("Display time for each race");
+		buttonGroup.add(rbtTimeInRace);
+		rbtTimeInRace.setSelected(true);
 		pnlElapsedTimer.add(rbtTimeInRace);
 		
 		JRadioButton rbtTimeOverall = new JRadioButton("Display overall play time");
+		buttonGroup.add(rbtTimeOverall);
 		pnlElapsedTimer.add(rbtTimeOverall);
 		
 		JButton btnBeginRichPresence = new JButton("Begin Rich Presence");

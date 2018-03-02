@@ -5,7 +5,11 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,10 +23,11 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
+import javax.swing.ImageIcon;
 
 public class MKWiiPresenceGUI {
 
-	private JFrame frame;
+	private JFrame frmSuperCoolRich;
 	private JTextField tbxFC1;
 	private JTextField tbxFC2;
 	private JTextField tbxFC3;
@@ -51,7 +56,7 @@ public class MKWiiPresenceGUI {
 						e.printStackTrace();
 					}
 					MKWiiPresenceGUI window = new MKWiiPresenceGUI();
-					window.frame.setVisible(true);
+					window.frmSuperCoolRich.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -61,30 +66,33 @@ public class MKWiiPresenceGUI {
 
 	/**
 	 * Create the application.
+	 * @throws IOException 
 	 */
-	public MKWiiPresenceGUI() {
+	public MKWiiPresenceGUI() throws IOException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws IOException 
 	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setResizable(false);
-		frame.setBounds(100, 100, 445, 500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+	private void initialize() throws IOException {
+		frmSuperCoolRich = new JFrame();
+		frmSuperCoolRich.setTitle("super cool rich presence lul");
+		frmSuperCoolRich.setResizable(false);
+		frmSuperCoolRich.setBounds(100, 100, 445, 600);
+		frmSuperCoolRich.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSuperCoolRich.getContentPane().setLayout(null);
 		
 		JLabel lblUserSettings = new JLabel("User Settings");
 		lblUserSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblUserSettings.setBounds(45, 11, 115, 31);
-		frame.getContentPane().add(lblUserSettings);
+		frmSuperCoolRich.getContentPane().add(lblUserSettings);
 		
 		JPanel pnlFriendCode = new JPanel();
 		pnlFriendCode.setBorder(new TitledBorder(null, "Friend Code", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlFriendCode.setBounds(10, 50, 180, 43);
-		frame.getContentPane().add(pnlFriendCode);
+		frmSuperCoolRich.getContentPane().add(pnlFriendCode);
 		pnlFriendCode.setLayout(new GridLayout(0, 3, 5, 0));
 		
 		tbxFC1 = new JTextField();
@@ -105,7 +113,7 @@ public class MKWiiPresenceGUI {
 		pnlUpdateRate = new JPanel();
 		pnlUpdateRate.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Update Rate", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlUpdateRate.setBounds(10, 104, 180, 271);
-		frame.getContentPane().add(pnlUpdateRate);
+		frmSuperCoolRich.getContentPane().add(pnlUpdateRate);
 		pnlUpdateRate.setLayout(null);
 		
 		JSlider slider = new JSlider();
@@ -145,12 +153,12 @@ public class MKWiiPresenceGUI {
 		lblRichPresenceSettings = new JLabel("Rich Presence Settings");
 		lblRichPresenceSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblRichPresenceSettings.setBounds(227, 11, 187, 31);
-		frame.getContentPane().add(lblRichPresenceSettings);
+		frmSuperCoolRich.getContentPane().add(lblRichPresenceSettings);
 		
 		pnlDetailsLine = new JPanel();
 		pnlDetailsLine.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Details Line", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlDetailsLine.setBounds(200, 50, 229, 92);
-		frame.getContentPane().add(pnlDetailsLine);
+		frmSuperCoolRich.getContentPane().add(pnlDetailsLine);
 		pnlDetailsLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
 		JCheckBox cbxMiiName = new JCheckBox("Display Mii name");
@@ -167,7 +175,7 @@ public class MKWiiPresenceGUI {
 		JPanel pnlStateLine = new JPanel();
 		pnlStateLine.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "State Line", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlStateLine.setBounds(200, 153, 229, 119);
-		frame.getContentPane().add(pnlStateLine);
+		frmSuperCoolRich.getContentPane().add(pnlStateLine);
 		pnlStateLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
 		JCheckBox cbxVRBR = new JCheckBox("Display VR/BR");
@@ -187,7 +195,7 @@ public class MKWiiPresenceGUI {
 		pnlElapsedTimer = new JPanel();
 		pnlElapsedTimer.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Elapsed Timer", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlElapsedTimer.setBounds(200, 283, 229, 92);
-		frame.getContentPane().add(pnlElapsedTimer);
+		frmSuperCoolRich.getContentPane().add(pnlElapsedTimer);
 		pnlElapsedTimer.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
 		JRadioButton rbtTimeInRoom = new JRadioButton("Display time in room (changes per room)");
@@ -204,12 +212,28 @@ public class MKWiiPresenceGUI {
 		pnlElapsedTimer.add(rbtTimeOverall);
 		
 		JButton btnBeginRichPresence = new JButton("Begin Rich Presence");
-		btnBeginRichPresence.setBounds(10, 386, 419, 43);
-		frame.getContentPane().add(btnBeginRichPresence);
+		btnBeginRichPresence.setBounds(10, 492, 419, 43);
+		frmSuperCoolRich.getContentPane().add(btnBeginRichPresence);
 		
 		JLabel lblStateIdle = new JLabel("State: Idle");
 		lblStateIdle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStateIdle.setBounds(10, 440, 419, 14);
-		frame.getContentPane().add(lblStateIdle);
+		lblStateIdle.setBounds(10, 546, 419, 14);
+		frmSuperCoolRich.getContentPane().add(lblStateIdle);
+		
+		JLabel lblPreview = new JLabel("Preview");
+		lblPreview.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPreview.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblPreview.setBounds(10, 386, 419, 31);
+		frmSuperCoolRich.getContentPane().add(lblPreview);
+		
+		JLabel lblDiscordIcon = new JLabel("");
+		lblDiscordIcon.setBounds(45, 428, 46, 14);
+		frmSuperCoolRich.getContentPane().add(lblDiscordIcon);
+		
+		JLabel lblPreviewImage = new JLabel("");
+		BufferedImage wPic = ImageIO.read(this.getClass().getResource("previewIcon.png"));
+		lblPreviewImage.setIcon(new ImageIcon(wPic));
+		lblPreviewImage.setBounds(55, 417, 64, 64);
+		frmSuperCoolRich.getContentPane().add(lblPreviewImage);
 	}
 }

@@ -19,6 +19,8 @@ public class MKWiiPresence {
 	}
 	
 	public MKWiiPresence() {
+		// is this a bad idea?
+		MKWiiPresence reference = this;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -28,7 +30,7 @@ public class MKWiiPresence {
 							| UnsupportedLookAndFeelException e) {
 						e.printStackTrace();
 					}
-					guiInstance = new MKWiiPresenceGUI();
+					guiInstance = new MKWiiPresenceGUI(reference);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,9 +51,13 @@ public class MKWiiPresence {
 		}
 	}
 	
+	public void setCurrentSettings(PresenceSettings settings) {
+		this.currentSettings = settings;
+	}
+	
 	public void requestNewPresence() {
 		try {
-			if (currentSettings.friendCode != null && currentSettings.friendCode.length() == 12) {
+			if (currentSettings.friendCode != null && currentSettings.friendCode.length() == 14) {
 				String friendCodeNumbers = currentSettings.friendCode.replace("-", "");
 				long friendCode = Long.parseLong(friendCodeNumbers);
 				int playerId = PresenceMessage.convertFriendCodeToPID(friendCode);

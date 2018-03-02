@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MKWiiPresenceGUI {
 
@@ -51,33 +53,15 @@ public class MKWiiPresenceGUI {
 	private JRadioButton rbtTimeInRace;
 	private JRadioButton rbtTimeOverall;
 	private JSlider sliderUpdateRate;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					try {
-						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-							| UnsupportedLookAndFeelException e) {
-						e.printStackTrace();
-					}
-					new MKWiiPresenceGUI();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
+	private MKWiiPresence mainInst;
 
 	/**
 	 * Create the application.
 	 * @throws IOException 
 	 */
-	public MKWiiPresenceGUI() throws IOException {
+	public MKWiiPresenceGUI(MKWiiPresence mainInst) throws IOException {
+		this.mainInst = mainInst;
 		initialize();
 		this.frmSuperCoolRich.setVisible(true);
 	}
@@ -222,6 +206,12 @@ public class MKWiiPresenceGUI {
 		pnlElapsedTimer.add(rbtTimeOverall);
 		
 		JButton btnBeginRichPresence = new JButton("Begin Rich Presence");
+		btnBeginRichPresence.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mainInst.setCurrentSettings(getSettings());
+				mainInst.requestNewPresence();
+			}
+		});
 		btnBeginRichPresence.setBounds(10, 492, 419, 43);
 		frmSuperCoolRich.getContentPane().add(btnBeginRichPresence);
 		

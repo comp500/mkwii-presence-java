@@ -4,13 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Hashtable;
 
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -116,26 +121,101 @@ public class MKWiiPresenceWindow {
 	    table.put(10, new JLabel("Fast (10 seconds)"));
 	    table.put(5, new JLabel("Very Fast (5 seconds)"));
 	    slider.setLabelTable(table);
+		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.Y_AXIS));
+		
+		JLabel lblUpdateRate = new JLabel("Update Rate");
+		lblUpdateRate.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		panel_3.add(lblUpdateRate);
 		panel_3.add(slider);
 		
 		JPanel panel_1 = new JPanel();
-		frame.getContentPane().add(panel_1, BorderLayout.EAST);
+		frame.getContentPane().add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 		
 		JLabel lblRichPresenceSettings = new JLabel("Rich Presence Settings");
 		lblRichPresenceSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblRichPresenceSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblRichPresenceSettings.setBorder(new EmptyBorder(10, 10, 10, 10));
 		panel_1.add(lblRichPresenceSettings);
 		
-		JButton btnNewButton_1 = new JButton("New button");
-		panel_1.add(btnNewButton_1);
+		JPanel panel_5 = new JPanel();
+		panel_1.add(panel_5);
+		panel_5.setLayout(new BoxLayout(panel_5, BoxLayout.Y_AXIS));
+		
+		JLabel lblDetailsLine = new JLabel("Details Line");
+		panel_5.add(lblDetailsLine);
+		
+		JCheckBox chckbxDisplayMiiName = new JCheckBox("Display Mii Name");
+		chckbxDisplayMiiName.setSelected(true);
+		panel_5.add(chckbxDisplayMiiName);
+		
+		JCheckBox chckbxDisplayFriendCode = new JCheckBox("Display Friend Code");
+		panel_5.add(chckbxDisplayFriendCode);
+		
+		JCheckBox chckbxDisplayRegion = new JCheckBox("Display Region");
+		panel_5.add(chckbxDisplayRegion);
+		
+		JPanel panel_6 = new JPanel();
+		panel_1.add(panel_6);
+		panel_6.setLayout(new BoxLayout(panel_6, BoxLayout.Y_AXIS));
+		
+		JLabel lblStateLine = new JLabel("State Line");
+		panel_6.add(lblStateLine);
+		
+		JCheckBox chckbxDisplayVrbr = new JCheckBox("Display VR/BR");
+		chckbxDisplayVrbr.setSelected(true);
+		panel_6.add(chckbxDisplayVrbr);
+		
+		JCheckBox chckbxDisplayDiscrepancyIn = new JCheckBox("Display discrepancy in VR/BR");
+		chckbxDisplayDiscrepancyIn.setSelected(true);
+		panel_6.add(chckbxDisplayDiscrepancyIn);
+		
+		JCheckBox chckbxDisplayNumberOf = new JCheckBox("Display number of players in room");
+		panel_6.add(chckbxDisplayNumberOf);
+		
+		JCheckBox chckbxDisplayNumberOf_1 = new JCheckBox("Display number of races played");
+		panel_6.add(chckbxDisplayNumberOf_1);
+		
+		JPanel panel_7 = new JPanel();
+		panel_1.add(panel_7);
+		panel_7.setLayout(new BoxLayout(panel_7, BoxLayout.Y_AXIS));
+		
+		JLabel lblElapsedTimer = new JLabel("Elapsed Timer");
+		panel_7.add(lblElapsedTimer);
+		
+		JRadioButton rdbtnDisplayTimeSpent = new JRadioButton("Display time spent in room");
+		rdbtnDisplayTimeSpent.setSelected(true);
+		panel_7.add(rdbtnDisplayTimeSpent);
+		
+		JRadioButton rdbtnDisplayTimeFor = new JRadioButton("Display time for each race");
+		panel_7.add(rdbtnDisplayTimeFor);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnDisplayTimeSpent);
+		group.add(rdbtnDisplayTimeFor);
+		
+		JPanel panel_8 = new JPanel();
+		frame.getContentPane().add(panel_8, BorderLayout.EAST);
+		
+		JLabel lblPreview = new JLabel("Preview");
+		lblPreview.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblPreview.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panel_8.add(lblPreview);
 		
 		JPanel panel_2 = new JPanel();
 		frame.getContentPane().add(panel_2, BorderLayout.SOUTH);
+		panel_2.setLayout(new BorderLayout(0, 0));
 		
 		JButton btnBeginRichPresence = new JButton("Begin Rich Presence");
-		panel_2.add(btnBeginRichPresence);
+		btnBeginRichPresence.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		panel_2.add(btnBeginRichPresence, BorderLayout.WEST);
+		
+		JLabel lblStatusIdle = new JLabel("Status: Idle");
+		lblStatusIdle.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panel_2.add(lblStatusIdle, BorderLayout.EAST);
 	}
 
 }

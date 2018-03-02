@@ -26,7 +26,7 @@ public class WiimmMessages {
 				return context.deserialize(json, WiimmRoom.class);
 			}
 
-			return null;
+			return context.deserialize(json, WiimmMessage.class);
 		}
 	}
 
@@ -44,6 +44,28 @@ public class WiimmMessages {
 		public Date roomStart;
 		@SerializedName("race_start")
 		public Date raceStart;
+		@SerializedName("n_races")
+		public int numberOfRaces;
+		@SerializedName("n_members")
+		public int numberOfMembers;
+		@SerializedName("n_players")
+		public int numberOfPlayers;
+		public WiimmMember[] members;
+		
+		public WiimmMember getPlayer(String code) {
+			for (int i = 0; i < this.members.length; i++) {
+				if (this.members[i].friendCode.equals(code)) {
+					return this.members[i];
+				}
+			}
+			return null;
+		}
+	}
+	
+	public class WiimmMember {
+		@SerializedName("fc")
+		public String friendCode;
+		public String[] names;
 	}
 
 	public static WiimmMessage deserialize(String json) {

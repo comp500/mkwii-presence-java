@@ -1,5 +1,6 @@
 package link.infra.mkwiipresence;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import link.infra.mkwiipresence.WiimmMessages.WiimmMember;
@@ -13,7 +14,9 @@ public class PresenceMessage {
 	public static int previousVR;
 	public static int previousBR;
 	
-
+	//	Let's store stuff!
+	ArrayList<String> data = new ArrayList<String>();
+	
 	public PresenceMessage(WiimmRoom room, PresenceSettings settings) {
 		WiimmMember member = room.getPlayer(settings.friendCode);
 		
@@ -22,20 +25,20 @@ public class PresenceMessage {
 		}
 		
 		if (settings.displayMiiName == true) {
-			detailsLine = String.format("%d", member.names[0]);
+			data.add(String.format("%d", member.names[0]));
 		}
 		if (settings.displayFriendCode == true) {
-			detailsLine += String.format(" (%d)", member.friendCode);
+			data.add(String.format(" (%d)", member.friendCode));
 		}
 		if (settings.displayRegion == true) {
-			detailsLine += String.format(" (%d)", member.userRegion);
+			data.add(String.format(" (%d)", member.userRegion));
 		}
 		
 		if (settings.displayVRBR == true) {
 			if (member.gameRegion.contains("bt")) {
-				stateLine = String.format("%d BR", member.battlePoints);
+				data.add(String.format("%d BR", member.battlePoints));
 			} else {
-				stateLine = String.format("%d VR", member.versusPoints);
+				data.add(String.format("%d VR", member.versusPoints));
 			}
 		}
 		if (settings.displayDiscrepancyVRBR == true) {
@@ -53,7 +56,34 @@ public class PresenceMessage {
 				battleDiscr = member.battlePoints - previousBR;
 			}
 			
-			// TODO format and add
+			if (member.gameRegion.contains("bt")) {
+				data.add(String.format("%d BR", member.battlePoints));
+			} else {
+				data.add(String.format("%d BR", member.versusPoints));
+			}
+		}
+		if (settings.displayNumPlayers == true) {
+			data.add(String.format("%d players in room", room.numberOfPlayers));
+		}
+		if (settings.displayNumRaces == true) {
+			if (member.userRaces == 1) {
+				data.add(String.format("%d race played", member.userRaces));
+			} else {
+				data.add(String.format("%d races played", member.userRaces));
+			}
+			
+		}
+		
+		if (settings.timerSetting == PresenceSettings.TimerSettingType.TIMEINRACE) {
+			startTimestamp = room.raceStart;
+		}
+		if (settings.timerSetting == PresenceSettings.TimerSettingType.TIMEINROOM) {
+			Date roomTime = new Date(0);
+			if (room.raceStart == null) {
+				startTimestamp = null;
+			}
+			
+			
 		}
 
 	}

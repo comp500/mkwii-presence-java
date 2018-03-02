@@ -12,6 +12,7 @@ import link.infra.mkwiipresence.WiimmMessages.WiimmRoom;
 public class MKWiiPresence {
 	public PresenceSettings currentSettings = new PresenceSettings();
 	public MKWiiPresenceGUI guiInstance;
+	public PresenceUpdater presenceUpdater;
 	
 	public static void main(String[] args) {
 		System.out.println("hi");
@@ -31,6 +32,7 @@ public class MKWiiPresence {
 						e.printStackTrace();
 					}
 					guiInstance = new MKWiiPresenceGUI(reference);
+					presenceUpdater = new PresenceUpdater();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -48,7 +50,7 @@ public class MKWiiPresence {
 		for (int i = 0; i < messages.length; i++) {
 			System.out.println(messages[i].messageType);
 			if (messages[i] instanceof WiimmRoom) {
-				PresenceUpdater.update(new PresenceMessage((WiimmRoom) messages[i], currentSettings));
+				presenceUpdater.update(new PresenceMessage((WiimmRoom) messages[i], currentSettings));
 			}
 		}
 	}

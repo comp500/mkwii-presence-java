@@ -93,7 +93,7 @@ public class PresenceMessage {
 		int pid;
 		
 		hex = Long.toHexString(fc);
-		hex = hex.substring(hex.length() - 8, 8);
+		hex = hex.substring(hex.length() - 8, hex.length());
 		pid = Integer.parseInt(hex, 16);
 		return pid;
 	}

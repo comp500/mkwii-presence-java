@@ -42,7 +42,7 @@ public class MKWiiPresenceGUI {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JCheckBox cbxDiscrepencyVRBR;
 	private JCheckBox cbxPlayersInRoom;
-	private JCheckBox chckbxDisplayNumberOf;
+	private JCheckBox cbxDisplayNumberOf;
 	private JCheckBox cbxMiiName;
 	private JCheckBox cbxFriendCode;
 	private JCheckBox cbxRegion;
@@ -198,8 +198,8 @@ public class MKWiiPresenceGUI {
 		cbxPlayersInRoom.setSelected(true);
 		pnlStateLine.add(cbxPlayersInRoom);
 		
-		chckbxDisplayNumberOf = new JCheckBox("Display number of races played");
-		pnlStateLine.add(chckbxDisplayNumberOf);
+		cbxDisplayNumberOf = new JCheckBox("Display number of races played");
+		pnlStateLine.add(cbxDisplayNumberOf);
 		
 		pnlElapsedTimer = new JPanel();
 		pnlElapsedTimer.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Elapsed Timer", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -255,12 +255,12 @@ public class MKWiiPresenceGUI {
 		settings.displayVRBR = cbxVRBR.isSelected();
 		settings.displayDiscrepancyVRBR = cbxDiscrepencyVRBR.isSelected();
 		settings.displayNumPlayers = cbxPlayersInRoom.isSelected();
-		settings.displayNumRaces = chckbxDisplayNumberOf.isSelected();
+		settings.displayNumRaces = cbxDisplayNumberOf.isSelected();
 		
 		if (rbtTimeInRoom.isSelected()) {
 			settings.timerSetting = PresenceSettings.TimerSettingType.TIMEINROOM;
 		} else if (rbtTimeInRace.isSelected()) {
-			settings.timerSetting = PresenceSettings.TimerSettingType.TIMEFORRACE;
+			settings.timerSetting = PresenceSettings.TimerSettingType.TIMEINRACE;
 		} else if (rbtTimeOverall.isSelected()) {
 			settings.timerSetting = PresenceSettings.TimerSettingType.OVERALLTIME;
 		}

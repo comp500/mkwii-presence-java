@@ -41,7 +41,7 @@ public class PresenceMessage {
 
 	}
 	
-	public static int ConvertFriendCodeToPID(long fc) {
+	public static int convertFriendCodeToPID(long fc) {
 		String hex;
 		int pid;
 		

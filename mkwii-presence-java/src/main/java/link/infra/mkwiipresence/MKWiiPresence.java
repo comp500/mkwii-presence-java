@@ -54,7 +54,7 @@ public class MKWiiPresence {
 			if (currentSettings.friendCode != null && currentSettings.friendCode.length() == 12) {
 				String friendCodeNumbers = currentSettings.friendCode.replace("-", "");
 				long friendCode = Long.parseLong(friendCodeNumbers);
-				int playerId = PresenceMessage.ConvertFriendCodeToPID(friendCode);
+				int playerId = PresenceMessage.convertFriendCodeToPID(friendCode);
 				String json = WiimmRequester.requestRoomInfo(playerId);
 				processResponse(json);
 			} else {

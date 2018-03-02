@@ -3,7 +3,7 @@ package link.infra.mkwiipresence;
 public class PresenceSettings {
 	public enum TimerSettingType {
 		TIMEINROOM,
-		TIMEFORRACE,
+		TIMEINRACE,
 		OVERALLTIME
 	}
 	

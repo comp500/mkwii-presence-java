@@ -10,12 +10,8 @@ public class WiimmRequester {
 	private final static String WiimmApiEndpoint = "https://wiimmfi.de/mkw/room/p";
 	private final static String WiimmApiQuery = "?m=json";
 
-	public static String requestRoomInfo(String playerId) throws IOException {
-		if (playerId.length() != 9) {
-			throw new RuntimeException("Player ID invalid!");
-		}
-
-		URL url = new URL(WiimmApiEndpoint + playerId + WiimmApiQuery);
+	public static String requestRoomInfo(int playerId) throws IOException {
+		URL url = new URL(WiimmApiEndpoint + Integer.toString(playerId) + WiimmApiQuery);
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
 

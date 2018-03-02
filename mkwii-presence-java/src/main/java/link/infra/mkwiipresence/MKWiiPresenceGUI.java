@@ -54,8 +54,7 @@ public class MKWiiPresenceGUI {
 							| UnsupportedLookAndFeelException e) {
 						e.printStackTrace();
 					}
-					MKWiiPresenceGUI window = new MKWiiPresenceGUI();
-					window.frmSuperCoolRich.setVisible(true);
+					new MKWiiPresenceGUI();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -69,6 +68,7 @@ public class MKWiiPresenceGUI {
 	 */
 	public MKWiiPresenceGUI() throws IOException {
 		initialize();
+		this.frmSuperCoolRich.setVisible(true);
 	}
 
 	/**

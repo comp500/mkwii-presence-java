@@ -50,6 +50,7 @@ public class MKWiiPresenceGUI {
 	private JRadioButton rbtTimeInRoom;
 	private JRadioButton rbtTimeInRace;
 	private JRadioButton rbtTimeOverall;
+	private JSlider sliderUpdateRate;
 
 	/**
 	 * Launch the application.
@@ -125,17 +126,17 @@ public class MKWiiPresenceGUI {
 		frmSuperCoolRich.getContentPane().add(pnlUpdateRate);
 		pnlUpdateRate.setLayout(null);
 		
-		JSlider slider = new JSlider();
-		slider.setValue(3);
-		slider.setBounds(6, 16, 60, 244);
-		slider.setMaximum(4);
-		slider.setMinimum(1);
-		slider.setMinorTickSpacing(1);
-		slider.setMajorTickSpacing(1);
-		slider.setPaintTicks(true);
-		slider.setSnapToTicks(true);
-		slider.setOrientation(SwingConstants.VERTICAL);
-		pnlUpdateRate.add(slider);
+		sliderUpdateRate = new JSlider();
+		sliderUpdateRate.setValue(3);
+		sliderUpdateRate.setBounds(6, 16, 60, 244);
+		sliderUpdateRate.setMaximum(4);
+		sliderUpdateRate.setMinimum(1);
+		sliderUpdateRate.setMinorTickSpacing(1);
+		sliderUpdateRate.setMajorTickSpacing(1);
+		sliderUpdateRate.setPaintTicks(true);
+		sliderUpdateRate.setSnapToTicks(true);
+		sliderUpdateRate.setOrientation(SwingConstants.VERTICAL);
+		pnlUpdateRate.add(sliderUpdateRate);
 		
 		pnlUpdateLabels = new JPanel();
 		pnlUpdateLabels.setBorder(null);
@@ -265,8 +266,13 @@ public class MKWiiPresenceGUI {
 			settings.timerSetting = PresenceSettings.TimerSettingType.OVERALLTIME;
 		}
 		
-		// TODO friend code and update rate
+		String friendCode1 = tbxFC1.getText();
+		String friendCode2 = tbxFC2.getText();
+		String friendCode3 = tbxFC3.getText();
+		// TODO sanitise
+		settings.friendCode = friendCode1 + "-" + friendCode2 + "-" + friendCode3;
 		
+		settings.updateRate = sliderUpdateRate.getValue();
 		return settings;
 	}
 }

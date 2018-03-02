@@ -26,16 +26,18 @@ public class WiimmMessages {
 				return context.deserialize(json, WiimmRoom.class);
 			}
 
-			return null;
+			WiimmMessage output = new WiimmMessage();
+			output.messageType = type;
+			return output;
 		}
 	}
 
-	public class WiimmMessage {
+	public static class WiimmMessage {
 		@SerializedName("type")
 		public String messageType;
 	}
 
-	public class WiimmRoom extends WiimmMessage {
+	public static class WiimmRoom extends WiimmMessage {
 		@SerializedName("room_id")
 		public int roomId;
 		@SerializedName("room_name")
@@ -62,7 +64,7 @@ public class WiimmMessages {
 		}
 	}
 	
-	public class WiimmMember {
+	public static class WiimmMember {
 		@SerializedName("fc")
 		public String friendCode;
 		public String[] names;

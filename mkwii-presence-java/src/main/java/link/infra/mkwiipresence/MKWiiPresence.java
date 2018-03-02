@@ -39,12 +39,14 @@ public class MKWiiPresence {
 	}
 	
 	public void showError(Exception e) {
+		e.printStackTrace();
 		JOptionPane.showMessageDialog(null, "Exception thrown: \n" + e.getMessage(), "There was a problem.", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public void processResponse(String json) {
 		WiimmMessage[] messages = WiimmMessages.deserialize(json);
 		for (int i = 0; i < messages.length; i++) {
+			System.out.println(messages[i].messageType);
 			if (messages[i] instanceof WiimmRoom) {
 				PresenceUpdater.update(new PresenceMessage((WiimmRoom) messages[i], currentSettings));
 			}
@@ -61,6 +63,7 @@ public class MKWiiPresence {
 				String friendCodeNumbers = currentSettings.friendCode.replace("-", "");
 				long friendCode = Long.parseLong(friendCodeNumbers);
 				int playerId = PresenceMessage.convertFriendCodeToPID(friendCode);
+				System.out.println(playerId);
 				String json = WiimmRequester.requestRoomInfo(playerId);
 				processResponse(json);
 			} else {

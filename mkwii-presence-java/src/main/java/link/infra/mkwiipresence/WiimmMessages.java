@@ -1,6 +1,7 @@
 package link.infra.mkwiipresence;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,12 +36,26 @@ public class WiimmMessages {
 	}
 
 	public class WiimmRoom extends WiimmMessage {
-
+		@SerializedName("room_id")
+		public int roomId;
+		@SerializedName("room_name")
+		public String roomName;
+		@SerializedName("room_start")
+		public Date roomStart;
+		@SerializedName("race_start")
+		public Date raceStart;
 	}
-	
+
 	public static WiimmMessage deserialize(String json) {
 		GsonBuilder gsonBuilder = new GsonBuilder();
+
 		gsonBuilder.registerTypeAdapter(WiimmMessage.class, new MessageDeserializer());
+		gsonBuilder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+			public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+					throws JsonParseException {
+				return new Date(json.getAsJsonPrimitive().getAsLong() * 1000);
+			}
+		});
 		Gson gson = gsonBuilder.create();
 
 		WiimmMessage message = gson.fromJson(json, WiimmMessage.class);

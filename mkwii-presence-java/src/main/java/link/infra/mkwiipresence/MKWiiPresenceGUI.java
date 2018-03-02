@@ -231,7 +231,7 @@ public class MKWiiPresenceGUI {
 		frmSuperCoolRich.getContentPane().add(lblDiscordIcon);
 		
 		JLabel lblPreviewImage = new JLabel("");
-		BufferedImage wPic = ImageIO.read(this.getClass().getResource("previewIcon.png"));
+		BufferedImage wPic = ImageIO.read(this.getClass().getResource("resources/previewIcon.png"));
 		lblPreviewImage.setIcon(new ImageIcon(wPic));
 		lblPreviewImage.setBounds(55, 417, 64, 64);
 		frmSuperCoolRich.getContentPane().add(lblPreviewImage);

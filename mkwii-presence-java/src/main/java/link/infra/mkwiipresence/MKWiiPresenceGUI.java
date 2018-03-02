@@ -1,32 +1,24 @@
 package link.infra.mkwiipresence;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.JLabel;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
+import javax.swing.JRadioButton;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.CardLayout;
-import java.awt.Color;
-import javax.swing.JSlider;
-import javax.swing.JCheckBox;
-import javax.swing.JRadioButton;
-import javax.swing.JButton;
-import javax.swing.ButtonGroup;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.TitledBorder;
 
 public class MKWiiPresenceGUI {
 

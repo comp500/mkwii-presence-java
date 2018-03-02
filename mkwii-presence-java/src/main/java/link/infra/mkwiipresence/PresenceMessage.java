@@ -13,14 +13,14 @@ public class PresenceMessage {
 		
 	}
 	
-	public static void ConvertFriendCodeToPID(long fc) {
+	public static int ConvertFriendCodeToPID(long fc) {
 		String hex;
-		long pid;
+		int pid;
 		
 		hex = Long.toHexString(fc);
 		hex = hex.substring(hex.length() - 8, 8);
-		pid = Long.parseLong(hex, 16);
-		System.out.println(pid);
+		pid = Integer.parseInt(hex, 16);
+		return pid;
 	}
 
 }

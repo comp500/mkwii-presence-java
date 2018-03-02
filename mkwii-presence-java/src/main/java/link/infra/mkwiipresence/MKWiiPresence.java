@@ -1,5 +1,7 @@
 package link.infra.mkwiipresence;
 
+import javax.swing.JOptionPane;
+
 import link.infra.mkwiipresence.WiimmMessages.WiimmMessage;
 import link.infra.mkwiipresence.WiimmMessages.WiimmRoom;
 
@@ -11,6 +13,10 @@ public class MKWiiPresence {
 	
 	public static void main(String[] args) {
 		System.out.println("hi");
+	}
+	
+	public void showError(Exception e) {
+		JOptionPane.showMessageDialog(null, "Exception thrown: \n" + e.getMessage(), "There was a problem.", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public void processResponse(String json) {

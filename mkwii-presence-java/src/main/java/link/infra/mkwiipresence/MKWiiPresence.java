@@ -19,6 +19,8 @@ public class MKWiiPresence {
 	}
 	
 	public MKWiiPresence() {
+		// is this a bad idea?
+		MKWiiPresence reference = this;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -28,7 +30,7 @@ public class MKWiiPresence {
 							| UnsupportedLookAndFeelException e) {
 						e.printStackTrace();
 					}
-					guiInstance = new MKWiiPresenceGUI();
+					guiInstance = new MKWiiPresenceGUI(reference);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -37,24 +39,31 @@ public class MKWiiPresence {
 	}
 	
 	public void showError(Exception e) {
+		e.printStackTrace();
 		JOptionPane.showMessageDialog(null, "Exception thrown: \n" + e.getMessage(), "There was a problem.", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public void processResponse(String json) {
 		WiimmMessage[] messages = WiimmMessages.deserialize(json);
 		for (int i = 0; i < messages.length; i++) {
+			System.out.println(messages[i].messageType);
 			if (messages[i] instanceof WiimmRoom) {
 				PresenceUpdater.update(new PresenceMessage((WiimmRoom) messages[i], currentSettings));
 			}
 		}
 	}
 	
+	public void setCurrentSettings(PresenceSettings settings) {
+		this.currentSettings = settings;
+	}
+	
 	public void requestNewPresence() {
 		try {
-			if (currentSettings.friendCode != null && currentSettings.friendCode.length() == 12) {
+			if (currentSettings.friendCode != null && currentSettings.friendCode.length() == 14) {
 				String friendCodeNumbers = currentSettings.friendCode.replace("-", "");
 				long friendCode = Long.parseLong(friendCodeNumbers);
 				int playerId = PresenceMessage.convertFriendCodeToPID(friendCode);
+				System.out.println(playerId);
 				String json = WiimmRequester.requestRoomInfo(playerId);
 				processResponse(json);
 			} else {

@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MKWiiPresenceGUI {
 
@@ -50,33 +52,16 @@ public class MKWiiPresenceGUI {
 	private JRadioButton rbtTimeInRoom;
 	private JRadioButton rbtTimeInRace;
 	private JRadioButton rbtTimeOverall;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					try {
-						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-							| UnsupportedLookAndFeelException e) {
-						e.printStackTrace();
-					}
-					new MKWiiPresenceGUI();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JSlider sliderUpdateRate;
+	
+	private MKWiiPresence mainInst;
 
 	/**
 	 * Create the application.
 	 * @throws IOException 
 	 */
-	public MKWiiPresenceGUI() throws IOException {
+	public MKWiiPresenceGUI(MKWiiPresence mainInst) throws IOException {
+		this.mainInst = mainInst;
 		initialize();
 		this.frmSuperCoolRich.setVisible(true);
 	}
@@ -125,17 +110,17 @@ public class MKWiiPresenceGUI {
 		frmSuperCoolRich.getContentPane().add(pnlUpdateRate);
 		pnlUpdateRate.setLayout(null);
 		
-		JSlider slider = new JSlider();
-		slider.setValue(3);
-		slider.setBounds(6, 16, 60, 244);
-		slider.setMaximum(4);
-		slider.setMinimum(1);
-		slider.setMinorTickSpacing(1);
-		slider.setMajorTickSpacing(1);
-		slider.setPaintTicks(true);
-		slider.setSnapToTicks(true);
-		slider.setOrientation(SwingConstants.VERTICAL);
-		pnlUpdateRate.add(slider);
+		sliderUpdateRate = new JSlider();
+		sliderUpdateRate.setValue(3);
+		sliderUpdateRate.setBounds(6, 16, 60, 244);
+		sliderUpdateRate.setMaximum(4);
+		sliderUpdateRate.setMinimum(1);
+		sliderUpdateRate.setMinorTickSpacing(1);
+		sliderUpdateRate.setMajorTickSpacing(1);
+		sliderUpdateRate.setPaintTicks(true);
+		sliderUpdateRate.setSnapToTicks(true);
+		sliderUpdateRate.setOrientation(SwingConstants.VERTICAL);
+		pnlUpdateRate.add(sliderUpdateRate);
 		
 		pnlUpdateLabels = new JPanel();
 		pnlUpdateLabels.setBorder(null);
@@ -221,6 +206,12 @@ public class MKWiiPresenceGUI {
 		pnlElapsedTimer.add(rbtTimeOverall);
 		
 		JButton btnBeginRichPresence = new JButton("Begin Rich Presence");
+		btnBeginRichPresence.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mainInst.setCurrentSettings(getSettings());
+				mainInst.requestNewPresence();
+			}
+		});
 		btnBeginRichPresence.setBounds(10, 492, 419, 43);
 		frmSuperCoolRich.getContentPane().add(btnBeginRichPresence);
 		
@@ -265,8 +256,13 @@ public class MKWiiPresenceGUI {
 			settings.timerSetting = PresenceSettings.TimerSettingType.OVERALLTIME;
 		}
 		
-		// TODO friend code and update rate
+		String friendCode1 = tbxFC1.getText();
+		String friendCode2 = tbxFC2.getText();
+		String friendCode3 = tbxFC3.getText();
+		// TODO sanitise
+		settings.friendCode = friendCode1 + "-" + friendCode2 + "-" + friendCode3;
 		
+		settings.updateRate = sliderUpdateRate.getValue();
 		return settings;
 	}
 }

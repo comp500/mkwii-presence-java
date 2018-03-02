@@ -1,6 +1,10 @@
 package link.infra.mkwiipresence;
 
+import java.awt.EventQueue;
+
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import link.infra.mkwiipresence.WiimmMessages.WiimmMessage;
 import link.infra.mkwiipresence.WiimmMessages.WiimmRoom;
@@ -10,9 +14,29 @@ import link.infra.mkwiipresence.WiimmMessages.WiimmRoom;
  */
 public class MKWiiPresence {
 	public PresenceSettings currentSettings = new PresenceSettings();
+	public MKWiiPresenceGUI guiInstance;
 	
 	public static void main(String[] args) {
 		System.out.println("hi");
+		new MKWiiPresence();
+	}
+	
+	public MKWiiPresence() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					try {
+						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+							| UnsupportedLookAndFeelException e) {
+						e.printStackTrace();
+					}
+					guiInstance = new MKWiiPresenceGUI();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	public void showError(Exception e) {

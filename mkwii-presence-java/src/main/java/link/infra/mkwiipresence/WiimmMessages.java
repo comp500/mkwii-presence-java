@@ -26,7 +26,7 @@ public class WiimmMessages {
 				return context.deserialize(json, WiimmRoom.class);
 			}
 
-			return context.deserialize(json, WiimmMessage.class);
+			return null;
 		}
 	}
 

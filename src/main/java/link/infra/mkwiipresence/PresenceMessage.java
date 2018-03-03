@@ -76,7 +76,11 @@ public class PresenceMessage {
 			}
 		}
 		if (settings.displayNumPlayers == true) {
-			stateArray.add(String.format("[%d players in room]", room.numberOfPlayers));
+			if (room.numberOfPlayers == 1) {
+				stateArray.add(String.format("[%d player in room]", room.numberOfPlayers));
+			} else {
+				stateArray.add(String.format("[%d players in room]", room.numberOfPlayers));
+			}
 		}
 		if (settings.displayNumRaces == true) {
 			if (member.userRaces == 1) {

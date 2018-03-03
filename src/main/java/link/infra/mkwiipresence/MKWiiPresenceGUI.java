@@ -140,11 +140,6 @@ public class MKWiiPresenceGUI {
 		pnlUpdateRate.setLayout(null);
 
 		sliderUpdateRate = new JSlider();
-		sliderUpdateRate.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				updatedSettings();
-			}
-		});
 		sliderUpdateRate.setValue(3);
 		sliderUpdateRate.setBounds(6, 16, 60, 244);
 		sliderUpdateRate.setMaximum(4);
@@ -154,6 +149,11 @@ public class MKWiiPresenceGUI {
 		sliderUpdateRate.setPaintTicks(true);
 		sliderUpdateRate.setSnapToTicks(true);
 		sliderUpdateRate.setOrientation(SwingConstants.VERTICAL);
+		sliderUpdateRate.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				updatedSettings();
+			}
+		});
 		pnlUpdateRate.add(sliderUpdateRate);
 
 		pnlUpdateLabels = new JPanel();

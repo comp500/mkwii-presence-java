@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
@@ -24,6 +25,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.AttributeSet;
@@ -34,8 +37,6 @@ import javax.swing.text.PlainDocument;
 
 import link.infra.mkwiipresence.WiimmMessages.WiimmMember;
 import link.infra.mkwiipresence.WiimmMessages.WiimmRoom;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 
 public class MKWiiPresenceGUI {
 
@@ -44,11 +45,6 @@ public class MKWiiPresenceGUI {
 	private JTextField tbxFC2;
 	private JTextField tbxFC3;
 	private JPanel pnlUpdateRate;
-	private JPanel pnlUpdateLabels;
-	private JLabel lblSlowSecs;
-	private JLabel lblMediumSecs;
-	private JLabel lblFastSecs;
-	private JLabel lblVeryFast;
 	private JLabel lblRichPresenceSettings;
 	private JPanel pnlDetailsLine;
 	private JPanel pnlElapsedTimer;
@@ -142,42 +138,27 @@ public class MKWiiPresenceGUI {
 
 		sliderUpdateRate = new JSlider();
 		sliderUpdateRate.setValue(3);
-		sliderUpdateRate.setBounds(6, 16, 60, 244);
-		sliderUpdateRate.setMaximum(4);
-		sliderUpdateRate.setMinimum(1);
-		sliderUpdateRate.setMinorTickSpacing(1);
-		sliderUpdateRate.setMajorTickSpacing(1);
+		sliderUpdateRate.setBounds(6, 16, 164, 244);
+		sliderUpdateRate.setMaximum(20);
+		sliderUpdateRate.setMinimum(5);
+		sliderUpdateRate.setMinorTickSpacing(5);
+		sliderUpdateRate.setMajorTickSpacing(5);
 		sliderUpdateRate.setPaintTicks(true);
 		sliderUpdateRate.setSnapToTicks(true);
+		sliderUpdateRate.setPaintLabels(true);
 		sliderUpdateRate.setOrientation(SwingConstants.VERTICAL);
+		Hashtable<Integer, JLabel> labels = new Hashtable<Integer, JLabel>();
+		labels.put(20, new JLabel("Slow (20 secs)"));
+		labels.put(15, new JLabel("Normal (15 secs)"));
+		labels.put(10, new JLabel("Fast (10 secs)"));
+		labels.put(5, new JLabel("Very Fast (5 secs)"));
+		sliderUpdateRate.setLabelTable(labels);
 		sliderUpdateRate.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				updatedSettings();
 			}
 		});
 		pnlUpdateRate.add(sliderUpdateRate);
-
-		pnlUpdateLabels = new JPanel();
-		pnlUpdateLabels.setBorder(null);
-		pnlUpdateLabels.setBounds(76, 16, 97, 244);
-		pnlUpdateRate.add(pnlUpdateLabels);
-		pnlUpdateLabels.setLayout(null);
-
-		lblSlowSecs = new JLabel("Slow (20 secs)");
-		lblSlowSecs.setBounds(0, 0, 71, 14);
-		pnlUpdateLabels.add(lblSlowSecs);
-
-		lblMediumSecs = new JLabel("Default (15 secs)");
-		lblMediumSecs.setBounds(0, 77, 87, 14);
-		pnlUpdateLabels.add(lblMediumSecs);
-
-		lblFastSecs = new JLabel("Fast (10 secs)");
-		lblFastSecs.setBounds(0, 153, 87, 14);
-		pnlUpdateLabels.add(lblFastSecs);
-
-		lblVeryFast = new JLabel("Very Fast (5 secs)");
-		lblVeryFast.setBounds(0, 230, 87, 14);
-		pnlUpdateLabels.add(lblVeryFast);
 
 		lblRichPresenceSettings = new JLabel("Rich Presence Settings");
 		lblRichPresenceSettings.setHorizontalAlignment(SwingConstants.CENTER);

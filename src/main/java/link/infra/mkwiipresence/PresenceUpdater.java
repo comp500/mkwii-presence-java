@@ -8,7 +8,7 @@ import com.github.psnrigner.discordrpcjava.ErrorCode;
 
 public class PresenceUpdater {
 
-	private static final String applicationId = "";
+	private static final String APP_ID = "412637273683918850";
 	private DiscordRpc discordRpc;
 
 	public PresenceUpdater() {
@@ -46,7 +46,7 @@ public class PresenceUpdater {
 			}
 		};
 
-		discordRpc.init(applicationId, discordEventHandler, true, null);
+		discordRpc.init(APP_ID, discordEventHandler, true, null);
 	}
 
 	public void update(PresenceMessage msg) {

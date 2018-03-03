@@ -45,14 +45,20 @@ public class MKWiiPresence {
 		JOptionPane.showMessageDialog(null, "Exception thrown: \n" + e.getMessage(), "There was a problem.", JOptionPane.ERROR_MESSAGE);
 	}
 	
-	public void processResponse(String json) {
+	public boolean processResponse(String json) {
 		WiimmMessage[] messages = WiimmMessages.deserialize(json);
+		boolean wasUpdated = false;
 		for (int i = 0; i < messages.length; i++) {
 			System.out.println(messages[i].messageType);
 			if (messages[i] instanceof WiimmRoom) {
 				presenceUpdater.update(new PresenceMessage((WiimmRoom) messages[i], currentSettings));
+				wasUpdated = true;
 			}
 		}
+		if (!wasUpdated) {
+			// Update presence with previous (cached) info
+		}
+		return wasUpdated;
 	}
 	
 	public void setCurrentSettings(PresenceSettings settings) {
@@ -67,7 +73,11 @@ public class MKWiiPresence {
 				int playerId = PresenceMessage.convertFriendCodeToPID(friendCode);
 				System.out.println(playerId);
 				String json = WiimmRequester.requestRoomInfo(playerId);
-				processResponse(json);
+				if (processResponse(json)) {
+					// Set status to done
+				} else {
+					// Set status depending on whether cache was used/available
+				}
 			} else {
 				System.out.println("WARN: friend code not set");
 			}

@@ -90,26 +90,6 @@ public class MKWiiPresenceGUI {
 			}
 		};
 
-		DocumentListener docListener = new DocumentListener() {
-			public void changedUpdate(DocumentEvent e) {
-				updatedSettings();
-				if (e.getDocument().getLength() >= 4) {
-					KeyboardFocusManager.getCurrentKeyboardFocusManager().focusNextComponent();
-				}
-			}
-
-			public void removeUpdate(DocumentEvent e) {
-				updatedSettings();
-			}
-
-			public void insertUpdate(DocumentEvent e) {
-				updatedSettings();
-				if (e.getDocument().getLength() >= 4) {
-					KeyboardFocusManager.getCurrentKeyboardFocusManager().focusNextComponent();
-				}
-			}
-		};
-
 		frmSuperCoolRich = new JFrame();
 		frmSuperCoolRich.setTitle("super cool rich presence lul");
 		frmSuperCoolRich.setResizable(false);
@@ -132,23 +112,24 @@ public class MKWiiPresenceGUI {
 		tbxFC1 = new JTextField();
 		tbxFC1.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC1.setColumns(10);
-		tbxFC1.getDocument().addDocumentListener(docListener);
 		((PlainDocument) tbxFC1.getDocument()).setDocumentFilter(new FriendCodeFilter());
 		pnlFriendCode.add(tbxFC1);
 
 		tbxFC2 = new JTextField();
 		tbxFC2.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC2.setColumns(10);
-		tbxFC2.getDocument().addDocumentListener(docListener);
 		((PlainDocument) tbxFC2.getDocument()).setDocumentFilter(new FriendCodeFilter());
 		pnlFriendCode.add(tbxFC2);
 
 		tbxFC3 = new JTextField();
 		tbxFC3.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC3.setColumns(10);
-		tbxFC3.getDocument().addDocumentListener(docListener);
 		((PlainDocument) tbxFC3.getDocument()).setDocumentFilter(new FriendCodeFilter());
 		pnlFriendCode.add(tbxFC3);
+		
+		tbxFC1.getDocument().addDocumentListener(new FriendCodeListener(tbxFC2));
+		tbxFC2.getDocument().addDocumentListener(new FriendCodeListener(tbxFC3));
+		tbxFC3.getDocument().addDocumentListener(new FriendCodeListener(null));
 
 		pnlUpdateRate = new JPanel();
 		pnlUpdateRate.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Update Rate",
@@ -309,6 +290,38 @@ public class MKWiiPresenceGUI {
 		lblPreviewText.setText("<html>" + previewMessage.detailsLine + "<br>" + previewMessage.stateLine);
 
 		mainInst.setCurrentSettings(getSettings());
+	}
+	
+	class FriendCodeListener implements DocumentListener {
+		JTextField nextField;
+		
+		public FriendCodeListener(JTextField next) {
+			nextField = next;
+		}
+		
+		public void changedUpdate(DocumentEvent e) {
+			updatedSettings();
+			if (e.getDocument().getLength() >= 4) {
+				if (nextField != null) {
+					nextField.setText("");
+					nextField.grabFocus();
+				}
+			}
+		}
+
+		public void removeUpdate(DocumentEvent e) {
+			updatedSettings();
+		}
+
+		public void insertUpdate(DocumentEvent e) {
+			updatedSettings();
+			if (e.getDocument().getLength() >= 4) {
+				if (nextField != null) {
+					nextField.setText("");
+					nextField.grabFocus();
+				}
+			}
+		}
 	}
 
 	class FriendCodeFilter extends DocumentFilter {

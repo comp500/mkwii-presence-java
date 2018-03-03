@@ -24,6 +24,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import link.infra.mkwiipresence.WiimmMessages.WiimmMember;
 import link.infra.mkwiipresence.WiimmMessages.WiimmRoom;
@@ -76,14 +78,21 @@ public class MKWiiPresenceGUI {
 	private void initialize() throws IOException {
 		ActionListener saveSettingsListener = new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				PresenceSettings settings = getSettings();
-				WiimmRoom room = createPreviewRoom(settings);
-				PresenceMessage previewMessage = new PresenceMessage(room, settings);
-				lblPreviewText.setText(previewMessage.detailsLine);
-				
-				mainInst.setCurrentSettings(getSettings());
-				// Save
-				// Update preview
+				updatedSettings();
+			}
+		};
+		
+		DocumentListener docListener = new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updatedSettings();
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				updatedSettings();
+			}
+
+			public void insertUpdate(DocumentEvent e) {
+				updatedSettings();
 			}
 		};
 		
@@ -108,16 +117,19 @@ public class MKWiiPresenceGUI {
 		tbxFC1 = new JTextField();
 		tbxFC1.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC1.setColumns(10);
+		tbxFC1.getDocument().addDocumentListener(docListener);
 		pnlFriendCode.add(tbxFC1);
 		
 		tbxFC2 = new JTextField();
 		tbxFC2.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC2.setColumns(10);
+		tbxFC2.getDocument().addDocumentListener(docListener);
 		pnlFriendCode.add(tbxFC2);
 		
 		tbxFC3 = new JTextField();
 		tbxFC3.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC3.setColumns(10);
+		tbxFC3.getDocument().addDocumentListener(docListener);
 		pnlFriendCode.add(tbxFC3);
 		
 		pnlUpdateRate = new JPanel();
@@ -257,14 +269,35 @@ public class MKWiiPresenceGUI {
 		frmSuperCoolRich.getContentPane().add(lblDiscordIcon);
 		
 		JLabel lblPreviewImage = new JLabel("");
+		lblPreviewImage.setToolTipText("Mario Kart Wii");
 		BufferedImage wPic = ImageIO.read(this.getClass().getResource("resources/previewIcon.png"));
 		lblPreviewImage.setIcon(new ImageIcon(wPic));
 		lblPreviewImage.setBounds(55, 417, 64, 64);
 		frmSuperCoolRich.getContentPane().add(lblPreviewImage);
 		
 		lblPreviewText = new JLabel("PreviewText");
-		lblPreviewText.setBounds(129, 428, 46, 14);
+		lblPreviewText.setVerticalAlignment(SwingConstants.TOP);
+		lblPreviewText.setBounds(129, 428, 285, 53);
 		frmSuperCoolRich.getContentPane().add(lblPreviewText);
+		
+		// Set up settings and preview
+		PresenceSettings settings = getSettings();
+		WiimmRoom room = createPreviewRoom(settings);
+		PresenceMessage previewMessage = new PresenceMessage(room, settings);
+		lblPreviewText.setText("<html>" + previewMessage.detailsLine + "<br>" + previewMessage.stateLine);
+		
+		mainInst.setCurrentSettings(getSettings());
+	}
+	
+	private void updatedSettings() {
+		PresenceSettings settings = getSettings();
+		WiimmRoom room = createPreviewRoom(settings);
+		PresenceMessage previewMessage = new PresenceMessage(room, settings);
+		lblPreviewText.setText("<html>" + previewMessage.detailsLine + "<br>" + previewMessage.stateLine);
+		// TODO timer
+		
+		mainInst.setCurrentSettings(getSettings());
+		// Save
 	}
 	
 	private WiimmRoom createPreviewRoom(PresenceSettings settings) {

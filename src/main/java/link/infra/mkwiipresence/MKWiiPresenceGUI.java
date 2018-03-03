@@ -63,13 +63,14 @@ public class MKWiiPresenceGUI {
 	private JRadioButton rbtTimeInRace;
 	private JRadioButton rbtTimeOverall;
 	private JSlider sliderUpdateRate;
-	
+
 	private MKWiiPresence mainInst;
 	private JLabel lblPreviewText;
 
 	/**
 	 * Create the application.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public MKWiiPresenceGUI(MKWiiPresence mainInst) throws IOException {
 		this.mainInst = mainInst;
@@ -79,7 +80,8 @@ public class MKWiiPresenceGUI {
 
 	/**
 	 * Initialize the contents of the frame.
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	private void initialize() throws IOException {
 		ActionListener saveSettingsListener = new ActionListener() {
@@ -87,13 +89,13 @@ public class MKWiiPresenceGUI {
 				updatedSettings();
 			}
 		};
-		
+
 		DocumentListener docListener = new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				updatedSettings();
 				if (e.getDocument().getLength() >= 4) {
-                    KeyboardFocusManager.getCurrentKeyboardFocusManager().focusNextComponent();
-                }
+					KeyboardFocusManager.getCurrentKeyboardFocusManager().focusNextComponent();
+				}
 			}
 
 			public void removeUpdate(DocumentEvent e) {
@@ -103,56 +105,58 @@ public class MKWiiPresenceGUI {
 			public void insertUpdate(DocumentEvent e) {
 				updatedSettings();
 				if (e.getDocument().getLength() >= 4) {
-                    KeyboardFocusManager.getCurrentKeyboardFocusManager().focusNextComponent();
-                }
+					KeyboardFocusManager.getCurrentKeyboardFocusManager().focusNextComponent();
+				}
 			}
 		};
-		
+
 		frmSuperCoolRich = new JFrame();
 		frmSuperCoolRich.setTitle("super cool rich presence lul");
 		frmSuperCoolRich.setResizable(false);
 		frmSuperCoolRich.setBounds(100, 100, 445, 600);
 		frmSuperCoolRich.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSuperCoolRich.getContentPane().setLayout(null);
-		
+
 		JLabel lblUserSettings = new JLabel("User Settings");
 		lblUserSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblUserSettings.setBounds(45, 11, 115, 31);
 		frmSuperCoolRich.getContentPane().add(lblUserSettings);
-		
+
 		JPanel pnlFriendCode = new JPanel();
-		pnlFriendCode.setBorder(new TitledBorder(null, "Friend Code", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlFriendCode
+				.setBorder(new TitledBorder(null, "Friend Code", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlFriendCode.setBounds(10, 50, 180, 43);
 		frmSuperCoolRich.getContentPane().add(pnlFriendCode);
 		pnlFriendCode.setLayout(new GridLayout(0, 3, 5, 0));
-		
+
 		tbxFC1 = new JTextField();
 		tbxFC1.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC1.setColumns(10);
 		tbxFC1.getDocument().addDocumentListener(docListener);
 		((PlainDocument) tbxFC1.getDocument()).setDocumentFilter(new FriendCodeFilter());
 		pnlFriendCode.add(tbxFC1);
-		
+
 		tbxFC2 = new JTextField();
 		tbxFC2.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC2.setColumns(10);
 		tbxFC2.getDocument().addDocumentListener(docListener);
 		((PlainDocument) tbxFC2.getDocument()).setDocumentFilter(new FriendCodeFilter());
 		pnlFriendCode.add(tbxFC2);
-		
+
 		tbxFC3 = new JTextField();
 		tbxFC3.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC3.setColumns(10);
 		tbxFC3.getDocument().addDocumentListener(docListener);
 		((PlainDocument) tbxFC3.getDocument()).setDocumentFilter(new FriendCodeFilter());
 		pnlFriendCode.add(tbxFC3);
-		
+
 		pnlUpdateRate = new JPanel();
-		pnlUpdateRate.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Update Rate", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlUpdateRate.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Update Rate",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlUpdateRate.setBounds(10, 104, 180, 271);
 		frmSuperCoolRich.getContentPane().add(pnlUpdateRate);
 		pnlUpdateRate.setLayout(null);
-		
+
 		sliderUpdateRate = new JSlider();
 		sliderUpdateRate.setValue(3);
 		sliderUpdateRate.setBounds(6, 16, 60, 244);
@@ -164,100 +168,103 @@ public class MKWiiPresenceGUI {
 		sliderUpdateRate.setSnapToTicks(true);
 		sliderUpdateRate.setOrientation(SwingConstants.VERTICAL);
 		pnlUpdateRate.add(sliderUpdateRate);
-		
+
 		pnlUpdateLabels = new JPanel();
 		pnlUpdateLabels.setBorder(null);
 		pnlUpdateLabels.setBounds(76, 16, 97, 244);
 		pnlUpdateRate.add(pnlUpdateLabels);
 		pnlUpdateLabels.setLayout(null);
-		
+
 		lblSlowSecs = new JLabel("Slow (20 secs)");
 		lblSlowSecs.setBounds(0, 0, 71, 14);
 		pnlUpdateLabels.add(lblSlowSecs);
-		
+
 		lblMediumSecs = new JLabel("Default (15 secs)");
 		lblMediumSecs.setBounds(0, 77, 87, 14);
 		pnlUpdateLabels.add(lblMediumSecs);
-		
+
 		lblFastSecs = new JLabel("Fast (10 secs)");
 		lblFastSecs.setBounds(0, 153, 87, 14);
 		pnlUpdateLabels.add(lblFastSecs);
-		
+
 		lblVeryFast = new JLabel("Very Fast (5 secs)");
 		lblVeryFast.setBounds(0, 230, 87, 14);
 		pnlUpdateLabels.add(lblVeryFast);
-		
+
 		lblRichPresenceSettings = new JLabel("Rich Presence Settings");
 		lblRichPresenceSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblRichPresenceSettings.setBounds(227, 11, 187, 31);
 		frmSuperCoolRich.getContentPane().add(lblRichPresenceSettings);
-		
+
 		pnlDetailsLine = new JPanel();
-		pnlDetailsLine.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Details Line", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlDetailsLine.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Details Line",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlDetailsLine.setBounds(200, 50, 229, 92);
 		frmSuperCoolRich.getContentPane().add(pnlDetailsLine);
 		pnlDetailsLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		
+
 		cbxMiiName = new JCheckBox("Display Mii name");
 		cbxMiiName.addActionListener(saveSettingsListener);
 		cbxMiiName.setSelected(true);
 		pnlDetailsLine.add(cbxMiiName);
-		
+
 		cbxFriendCode = new JCheckBox("Display friend code");
 		cbxFriendCode.addActionListener(saveSettingsListener);
 		cbxFriendCode.setSelected(true);
 		pnlDetailsLine.add(cbxFriendCode);
-		
+
 		cbxRegion = new JCheckBox("Display your region");
 		cbxRegion.addActionListener(saveSettingsListener);
 		pnlDetailsLine.add(cbxRegion);
-		
+
 		JPanel pnlStateLine = new JPanel();
-		pnlStateLine.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "State Line", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlStateLine.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "State Line",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlStateLine.setBounds(200, 153, 229, 119);
 		frmSuperCoolRich.getContentPane().add(pnlStateLine);
 		pnlStateLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		
+
 		cbxVRBR = new JCheckBox("Display VR/BR");
 		cbxVRBR.addActionListener(saveSettingsListener);
 		cbxVRBR.setSelected(true);
 		pnlStateLine.add(cbxVRBR);
-		
+
 		cbxDiscrepancyVRBR = new JCheckBox("Display discrepancy in VR/BR");
 		cbxDiscrepancyVRBR.addActionListener(saveSettingsListener);
 		pnlStateLine.add(cbxDiscrepancyVRBR);
-		
+
 		cbxPlayersInRoom = new JCheckBox("Display number of players in room");
 		cbxPlayersInRoom.addActionListener(saveSettingsListener);
 		cbxPlayersInRoom.setSelected(true);
 		pnlStateLine.add(cbxPlayersInRoom);
-		
+
 		cbxDisplayNumRaces = new JCheckBox("Display number of races played");
 		cbxDisplayNumRaces.addActionListener(saveSettingsListener);
 		pnlStateLine.add(cbxDisplayNumRaces);
-		
+
 		pnlElapsedTimer = new JPanel();
-		pnlElapsedTimer.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Elapsed Timer", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlElapsedTimer.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Elapsed Timer",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlElapsedTimer.setBounds(200, 283, 229, 92);
 		frmSuperCoolRich.getContentPane().add(pnlElapsedTimer);
 		pnlElapsedTimer.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		
+
 		rbtTimeInRoom = new JRadioButton("Display time in room (changes per room)");
 		rbtTimeInRoom.addActionListener(saveSettingsListener);
 		buttonGroup.add(rbtTimeInRoom);
 		pnlElapsedTimer.add(rbtTimeInRoom);
-		
+
 		rbtTimeInRace = new JRadioButton("Display time for each race");
 		rbtTimeInRace.addActionListener(saveSettingsListener);
 		buttonGroup.add(rbtTimeInRace);
 		rbtTimeInRace.setSelected(true);
 		pnlElapsedTimer.add(rbtTimeInRace);
-		
+
 		rbtTimeOverall = new JRadioButton("Display overall play time");
 		rbtTimeOverall.addActionListener(saveSettingsListener);
 		buttonGroup.add(rbtTimeOverall);
 		pnlElapsedTimer.add(rbtTimeOverall);
-		
+
 		JButton btnBeginRichPresence = new JButton("Begin Rich Presence");
 		btnBeginRichPresence.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -267,43 +274,43 @@ public class MKWiiPresenceGUI {
 		});
 		btnBeginRichPresence.setBounds(10, 492, 419, 43);
 		frmSuperCoolRich.getContentPane().add(btnBeginRichPresence);
-		
+
 		JLabel lblStateIdle = new JLabel("State: Idle");
 		lblStateIdle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStateIdle.setBounds(10, 546, 419, 14);
 		frmSuperCoolRich.getContentPane().add(lblStateIdle);
-		
+
 		JLabel lblPreview = new JLabel("Preview");
 		lblPreview.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPreview.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblPreview.setBounds(10, 386, 419, 31);
 		frmSuperCoolRich.getContentPane().add(lblPreview);
-		
+
 		JLabel lblDiscordIcon = new JLabel("");
 		lblDiscordIcon.setBounds(45, 428, 46, 14);
 		frmSuperCoolRich.getContentPane().add(lblDiscordIcon);
-		
+
 		JLabel lblPreviewImage = new JLabel("");
 		lblPreviewImage.setToolTipText("Mario Kart Wii");
 		BufferedImage wPic = ImageIO.read(this.getClass().getResource("resources/previewIcon.png"));
 		lblPreviewImage.setIcon(new ImageIcon(wPic));
 		lblPreviewImage.setBounds(55, 417, 64, 64);
 		frmSuperCoolRich.getContentPane().add(lblPreviewImage);
-		
+
 		lblPreviewText = new JLabel("PreviewText");
 		lblPreviewText.setVerticalAlignment(SwingConstants.TOP);
 		lblPreviewText.setBounds(129, 428, 285, 53);
 		frmSuperCoolRich.getContentPane().add(lblPreviewText);
-		
+
 		// Set up settings and preview
 		PresenceSettings settings = getSettings();
 		WiimmRoom room = createPreviewRoom(settings);
 		PresenceMessage previewMessage = new PresenceMessage(room, settings);
 		lblPreviewText.setText("<html>" + previewMessage.detailsLine + "<br>" + previewMessage.stateLine);
-		
+
 		mainInst.setCurrentSettings(getSettings());
 	}
-	
+
 	class FriendCodeFilter extends DocumentFilter {
 		@Override
 		public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
@@ -322,10 +329,12 @@ public class MKWiiPresenceGUI {
 		}
 
 		private boolean test(String text) {
-			if (text.length() > 4) return false;
+			if (text.length() > 4)
+				return false;
 			// Allow null or ""
-			if (text == null || text.length() == 0) return true;
-			
+			if (text == null || text.length() == 0)
+				return true;
+
 			try {
 				Integer.parseInt(text);
 				return true;
@@ -365,29 +374,29 @@ public class MKWiiPresenceGUI {
 
 		}
 	}
-	
+
 	private void updatedSettings() {
 		PresenceSettings settings = getSettings();
 		WiimmRoom room = createPreviewRoom(settings);
 		PresenceMessage previewMessage = new PresenceMessage(room, settings);
 		lblPreviewText.setText("<html>" + previewMessage.detailsLine + "<br>" + previewMessage.stateLine);
 		// TODO timer
-		
+
 		mainInst.setCurrentSettings(getSettings());
 		// Save
 	}
-	
+
 	private WiimmRoom createPreviewRoom(PresenceSettings settings) {
 		WiimmRoom room = new WiimmRoom();
 		WiimmMember member = new WiimmMember();
-		
+
 		room.roomName = "ROOM";
 		room.roomStart = new Date();
 		room.raceStart = new Date();
 		room.numberOfRaces = 1;
 		room.numberOfMembers = 1;
 		room.numberOfPlayers = 1;
-		
+
 		member.friendCode = settings.friendCode;
 		member.names = new String[2];
 		member.names[0] = "Player"; // TODO use room from cache?
@@ -397,16 +406,16 @@ public class MKWiiPresenceGUI {
 		member.battlePoints = 2357;
 		member.versusPoints = 4325;
 		member.userRaces = 1;
-		
+
 		room.members = new WiimmMember[1];
 		room.members[0] = member;
-		
+
 		return room;
 	}
-	
+
 	public PresenceSettings getSettings() {
 		PresenceSettings settings = new PresenceSettings();
-		
+
 		settings.displayMiiName = cbxMiiName.isSelected();
 		settings.displayFriendCode = cbxFriendCode.isSelected();
 		settings.displayRegion = cbxRegion.isSelected();
@@ -414,7 +423,7 @@ public class MKWiiPresenceGUI {
 		settings.displayDiscrepancyVRBR = cbxDiscrepancyVRBR.isSelected();
 		settings.displayNumPlayers = cbxPlayersInRoom.isSelected();
 		settings.displayNumRaces = cbxDisplayNumRaces.isSelected();
-		
+
 		if (rbtTimeInRoom.isSelected()) {
 			settings.timerSetting = PresenceSettings.TimerSettingType.TIMEINROOM;
 		} else if (rbtTimeInRace.isSelected()) {
@@ -422,17 +431,17 @@ public class MKWiiPresenceGUI {
 		} else if (rbtTimeOverall.isSelected()) {
 			settings.timerSetting = PresenceSettings.TimerSettingType.OVERALLTIME;
 		}
-		
+
 		String friendCode1 = tbxFC1.getText();
 		String friendCode2 = tbxFC2.getText();
 		String friendCode3 = tbxFC3.getText();
 		// TODO sanitise
 		settings.friendCode = friendCode1 + "-" + friendCode2 + "-" + friendCode3;
-		
+
 		settings.updateRate = sliderUpdateRate.getValue();
 		return settings;
 	}
-	
+
 	public void loadSettings(PresenceSettings settings) {
 		cbxMiiName.setSelected(settings.displayMiiName);
 		cbxFriendCode.setSelected(settings.displayFriendCode);
@@ -441,31 +450,31 @@ public class MKWiiPresenceGUI {
 		cbxDiscrepancyVRBR.setSelected(settings.displayDiscrepancyVRBR);
 		cbxPlayersInRoom.setSelected(settings.displayNumPlayers);
 		cbxDisplayNumRaces.setSelected(settings.displayNumRaces);
-		
+
 		rbtTimeInRoom.setSelected(false);
 		rbtTimeInRace.setSelected(false);
 		rbtTimeOverall.setSelected(false);
 		switch (settings.timerSetting) {
-			case TIMEINROOM:
-				rbtTimeInRoom.setSelected(true);
-				break;
-			case OVERALLTIME:
-				rbtTimeOverall.setSelected(true);
-				break;
-			case TIMEINRACE:
-				rbtTimeInRace.setSelected(true);
-				break;
-			default:
-				break;
+		case TIMEINROOM:
+			rbtTimeInRoom.setSelected(true);
+			break;
+		case OVERALLTIME:
+			rbtTimeOverall.setSelected(true);
+			break;
+		case TIMEINRACE:
+			rbtTimeInRace.setSelected(true);
+			break;
+		default:
+			break;
 		}
-		
+
 		String[] friendCodeSplit = settings.friendCode.split("-");
 		if (friendCodeSplit.length >= 3) {
 			tbxFC1.setText(friendCodeSplit[0]);
 			tbxFC2.setText(friendCodeSplit[1]);
 			tbxFC3.setText(friendCodeSplit[2]);
 		}
-		
+
 		sliderUpdateRate.setValue(settings.updateRate);
 	}
 }

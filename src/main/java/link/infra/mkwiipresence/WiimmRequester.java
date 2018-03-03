@@ -30,4 +30,14 @@ public class WiimmRequester {
 		
 		return content.toString();
 	}
+
+	public static int convertFriendCodeToPID(long fc) {
+		String hex;
+		int pid;
+		
+		hex = Long.toHexString(fc);
+		hex = hex.substring(hex.length() - 8, hex.length());
+		pid = Integer.parseInt(hex, 16);
+		return pid;
+	}
 }

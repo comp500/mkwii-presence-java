@@ -68,23 +68,29 @@ public class MKWiiPresence {
 	}
 	
 	public void requestNewPresence() {
-		try {
-			if (currentSettings.friendCode != null && currentSettings.friendCode.length() == 14) {
-				String friendCodeNumbers = currentSettings.friendCode.replace("-", "");
+		if (currentSettings.friendCode != null && currentSettings.friendCode.length() == 14) {
+			String friendCodeNumbers = currentSettings.friendCode.replace("-", "");
+			int playerId;
+			try {
 				long friendCode = Long.parseLong(friendCodeNumbers);
-				int playerId = PresenceMessage.convertFriendCodeToPID(friendCode);
-				System.out.println(playerId);
+				playerId = WiimmRequester.convertFriendCodeToPID(friendCode);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Invalid friend code", "There was a problem.", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			System.out.println(playerId);
+			try {
 				String json = WiimmRequester.requestRoomInfo(playerId);
 				if (processResponse(json)) {
 					// Set status to done
 				} else {
 					// Set status depending on whether cache was used/available
 				}
-			} else {
-				System.out.println("WARN: friend code not set");
+			} catch (Exception e) {
+				showError(e);
 			}
-		} catch (Exception e) {
-			showError(e);
+		} else {
+			JOptionPane.showMessageDialog(null, "Invalid friend code", "There was a problem.", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

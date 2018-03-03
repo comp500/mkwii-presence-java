@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -26,6 +27,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -39,8 +41,6 @@ import javax.swing.text.PlainDocument;
 
 import link.infra.mkwiipresence.WiimmMessages.WiimmMember;
 import link.infra.mkwiipresence.WiimmMessages.WiimmRoom;
-import java.awt.Toolkit;
-import javax.swing.border.EmptyBorder;
 
 public class MKWiiPresenceGUI {
 
@@ -68,6 +68,9 @@ public class MKWiiPresenceGUI {
 	private MKWiiPresence mainInst;
 	private JLabel lblPreviewText;
 	private JPanel previewPanel;
+	private JLabel lblPlayingAGame;
+	private JPanel previewBoxPanel;
+	private JPanel panel;
 
 	/**
 	 * Create the application.
@@ -93,7 +96,8 @@ public class MKWiiPresenceGUI {
 		};
 
 		frmSuperCoolRich = new JFrame();
-		frmSuperCoolRich.setIconImage(Toolkit.getDefaultToolkit().getImage(MKWiiPresenceGUI.class.getResource("/link/infra/mkwiipresence/resources/logo.png")));
+		frmSuperCoolRich.setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(MKWiiPresenceGUI.class.getResource("/link/infra/mkwiipresence/resources/logo.png")));
 		frmSuperCoolRich.setTitle("super cool rich presence lul");
 		frmSuperCoolRich.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSuperCoolRich.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -168,13 +172,13 @@ public class MKWiiPresenceGUI {
 
 		JPanel richPresencePanel = new JPanel();
 		richPresencePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		frmSuperCoolRich.getContentPane().add(richPresencePanel, BorderLayout.CENTER);
+		frmSuperCoolRich.getContentPane().add(richPresencePanel, BorderLayout.EAST);
 		richPresencePanel.setLayout(new BoxLayout(richPresencePanel, BoxLayout.Y_AXIS));
-		
-				lblRichPresenceSettings = new JLabel("Rich Presence Settings");
-				richPresencePanel.add(lblRichPresenceSettings);
-				lblRichPresenceSettings.setHorizontalAlignment(SwingConstants.CENTER);
-				lblRichPresenceSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
+
+		lblRichPresenceSettings = new JLabel("Rich Presence Settings");
+		richPresencePanel.add(lblRichPresenceSettings);
+		lblRichPresenceSettings.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRichPresenceSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		pnlDetailsLine = new JPanel();
 		richPresencePanel.add(pnlDetailsLine);
@@ -253,8 +257,22 @@ public class MKWiiPresenceGUI {
 		lblPreview.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPreview.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
+		previewBoxPanel = new JPanel();
+		previewBoxPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		finalPanel.add(previewBoxPanel);
+		previewBoxPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		panel = new JPanel();
+		previewBoxPanel.add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+		lblPlayingAGame = new JLabel("<html><b><small>PLAYING A GAME</small></b>");
+		panel.add(lblPlayingAGame);
+		lblPlayingAGame.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblPlayingAGame.setHorizontalAlignment(SwingConstants.LEFT);
+
 		previewPanel = new JPanel();
-		finalPanel.add(previewPanel);
+		panel.add(previewPanel);
 
 		JLabel lblPreviewImage = new JLabel("");
 		previewPanel.add(lblPreviewImage);
@@ -262,7 +280,6 @@ public class MKWiiPresenceGUI {
 		lblPreviewImage.setToolTipText("Mario Kart Wii");
 		BufferedImage wPic = ImageIO.read(this.getClass().getResource("resources/previewIcon.png"));
 		lblPreviewImage.setIcon(new ImageIcon(wPic));
-
 		lblPreviewText = new JLabel("PreviewText");
 		previewPanel.add(lblPreviewText);
 		lblPreviewText.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -291,10 +308,11 @@ public class MKWiiPresenceGUI {
 		PresenceSettings settings = getSettings();
 		WiimmRoom room = createPreviewRoom(settings);
 		PresenceMessage previewMessage = new PresenceMessage(room, settings);
-		lblPreviewText.setText("<html>" + previewMessage.detailsLine + "<br>" + previewMessage.stateLine);
-
-		mainInst.setCurrentSettings(getSettings());
+		lblPreviewText.setText("<html><b>Mario Kart Wii</b><br>" + previewMessage.detailsLine + "<br>"
+				+ previewMessage.stateLine + "<br>00:10 elapsed");
 		
+		mainInst.setCurrentSettings(getSettings());
+
 		frmSuperCoolRich.pack();
 	}
 
@@ -347,7 +365,7 @@ public class MKWiiPresenceGUI {
 				// warn the user and don't allow the insert
 			}
 		}
-		
+
 		private boolean paste(String text) {
 			// Allow pasting
 			String replacedText = text.replaceAll("\\D", "");
@@ -364,7 +382,7 @@ public class MKWiiPresenceGUI {
 			// Allow null or ""
 			if (text == null || text.length() == 0)
 				return true;
-			
+
 			if (text.length() > 4)
 				return false;
 

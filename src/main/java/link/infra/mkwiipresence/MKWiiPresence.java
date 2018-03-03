@@ -31,8 +31,8 @@ public class MKWiiPresence {
 							| UnsupportedLookAndFeelException e) {
 						e.printStackTrace();
 					}
-					guiInstance = new MKWiiPresenceGUI(reference);
 					presenceUpdater = new PresenceUpdater();
+					guiInstance = new MKWiiPresenceGUI(reference);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -57,6 +57,8 @@ public class MKWiiPresence {
 		}
 		if (!wasUpdated) {
 			// Update presence with previous (cached) info
+			// TODO remove testing code
+			presenceUpdater.update(null);
 		}
 		return wasUpdated;
 	}

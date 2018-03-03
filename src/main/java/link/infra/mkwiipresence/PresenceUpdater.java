@@ -47,6 +47,7 @@ public class PresenceUpdater {
 		};
 
 		discordRpc.init(APP_ID, discordEventHandler, true, null);
+		System.out.println("called init");
 	}
 
 	public void update(PresenceMessage msg) {
@@ -64,6 +65,8 @@ public class PresenceUpdater {
 		discordRichPresence.setJoinSecret("join");
 		discordRichPresence.setSpectateSecret("look");
 		discordRichPresence.setInstance(false);
+		
+		System.out.println("sent update");
 		
 		discordRpc.updatePresence(discordRichPresence);
 	}

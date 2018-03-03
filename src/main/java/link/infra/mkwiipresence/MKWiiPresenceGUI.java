@@ -1,9 +1,10 @@
 package link.infra.mkwiipresence;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -63,6 +65,7 @@ public class MKWiiPresenceGUI {
 
 	private MKWiiPresence mainInst;
 	private JLabel lblPreviewText;
+	private JPanel panel_3;
 
 	/**
 	 * Create the application.
@@ -89,56 +92,55 @@ public class MKWiiPresenceGUI {
 
 		frmSuperCoolRich = new JFrame();
 		frmSuperCoolRich.setTitle("super cool rich presence lul");
-		frmSuperCoolRich.setResizable(false);
-		frmSuperCoolRich.setBounds(100, 100, 445, 600);
+		frmSuperCoolRich.setBounds(100, 100, 425, 515);
 		frmSuperCoolRich.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmSuperCoolRich.getContentPane().setLayout(null);
+		frmSuperCoolRich.getContentPane().setLayout(new BorderLayout(0, 0));
+
+		JPanel panel = new JPanel();
+		frmSuperCoolRich.getContentPane().add(panel, BorderLayout.WEST);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		JLabel lblUserSettings = new JLabel("User Settings");
+		lblUserSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel.add(lblUserSettings);
 		lblUserSettings.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUserSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblUserSettings.setBounds(10, 11, 180, 31);
-		frmSuperCoolRich.getContentPane().add(lblUserSettings);
 
 		JPanel pnlFriendCode = new JPanel();
+		panel.add(pnlFriendCode);
 		pnlFriendCode
 				.setBorder(new TitledBorder(null, "Friend Code", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlFriendCode.setBounds(10, 50, 180, 43);
-		frmSuperCoolRich.getContentPane().add(pnlFriendCode);
-		pnlFriendCode.setLayout(new GridLayout(0, 3, 5, 0));
 
 		tbxFC1 = new JTextField();
 		tbxFC1.setHorizontalAlignment(SwingConstants.CENTER);
-		tbxFC1.setColumns(10);
+		tbxFC1.setColumns(4);
 		((PlainDocument) tbxFC1.getDocument()).setDocumentFilter(new FriendCodeFilter());
+		pnlFriendCode.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pnlFriendCode.add(tbxFC1);
 
 		tbxFC2 = new JTextField();
 		tbxFC2.setHorizontalAlignment(SwingConstants.CENTER);
-		tbxFC2.setColumns(10);
+		tbxFC2.setColumns(4);
 		((PlainDocument) tbxFC2.getDocument()).setDocumentFilter(new FriendCodeFilter());
 		pnlFriendCode.add(tbxFC2);
 
 		tbxFC3 = new JTextField();
 		tbxFC3.setHorizontalAlignment(SwingConstants.CENTER);
-		tbxFC3.setColumns(10);
+		tbxFC3.setColumns(4);
 		((PlainDocument) tbxFC3.getDocument()).setDocumentFilter(new FriendCodeFilter());
 		pnlFriendCode.add(tbxFC3);
-		
+
 		tbxFC1.getDocument().addDocumentListener(new FriendCodeListener(tbxFC2));
 		tbxFC2.getDocument().addDocumentListener(new FriendCodeListener(tbxFC3));
 		tbxFC3.getDocument().addDocumentListener(new FriendCodeListener(null));
 
 		pnlUpdateRate = new JPanel();
+		panel.add(pnlUpdateRate);
 		pnlUpdateRate.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Update Rate",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlUpdateRate.setBounds(10, 104, 180, 271);
-		frmSuperCoolRich.getContentPane().add(pnlUpdateRate);
-		pnlUpdateRate.setLayout(null);
 
 		sliderUpdateRate = new JSlider();
-		sliderUpdateRate.setValue(3);
-		sliderUpdateRate.setBounds(6, 16, 164, 244);
+		sliderUpdateRate.setValue(15);
 		sliderUpdateRate.setMaximum(20);
 		sliderUpdateRate.setMinimum(5);
 		sliderUpdateRate.setMinorTickSpacing(5);
@@ -158,23 +160,26 @@ public class MKWiiPresenceGUI {
 				updatedSettings();
 			}
 		});
+		pnlUpdateRate.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pnlUpdateRate.add(sliderUpdateRate);
 
-		lblRichPresenceSettings = new JLabel("Rich Presence Settings");
-		lblRichPresenceSettings.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRichPresenceSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblRichPresenceSettings.setBounds(200, 11, 229, 31);
-		frmSuperCoolRich.getContentPane().add(lblRichPresenceSettings);
+		JPanel panel_1 = new JPanel();
+		frmSuperCoolRich.getContentPane().add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+		
+				lblRichPresenceSettings = new JLabel("Rich Presence Settings");
+				panel_1.add(lblRichPresenceSettings);
+				lblRichPresenceSettings.setHorizontalAlignment(SwingConstants.CENTER);
+				lblRichPresenceSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		pnlDetailsLine = new JPanel();
+		panel_1.add(pnlDetailsLine);
 		pnlDetailsLine.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Details Line",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlDetailsLine.setBounds(200, 50, 229, 92);
-		frmSuperCoolRich.getContentPane().add(pnlDetailsLine);
-		pnlDetailsLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
 		cbxMiiName = new JCheckBox("Display Mii name");
 		cbxMiiName.addActionListener(saveSettingsListener);
+		pnlDetailsLine.setLayout(new BoxLayout(pnlDetailsLine, BoxLayout.Y_AXIS));
 		cbxMiiName.setSelected(true);
 		pnlDetailsLine.add(cbxMiiName);
 
@@ -188,14 +193,13 @@ public class MKWiiPresenceGUI {
 		pnlDetailsLine.add(cbxRegion);
 
 		JPanel pnlStateLine = new JPanel();
+		panel_1.add(pnlStateLine);
 		pnlStateLine.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "State Line",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlStateLine.setBounds(200, 153, 229, 119);
-		frmSuperCoolRich.getContentPane().add(pnlStateLine);
-		pnlStateLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
 		cbxVRBR = new JCheckBox("Display VR/BR");
 		cbxVRBR.addActionListener(saveSettingsListener);
+		pnlStateLine.setLayout(new BoxLayout(pnlStateLine, BoxLayout.Y_AXIS));
 		cbxVRBR.setSelected(true);
 		pnlStateLine.add(cbxVRBR);
 
@@ -213,14 +217,13 @@ public class MKWiiPresenceGUI {
 		pnlStateLine.add(cbxDisplayNumRaces);
 
 		pnlElapsedTimer = new JPanel();
+		panel_1.add(pnlElapsedTimer);
 		pnlElapsedTimer.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Elapsed Timer",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlElapsedTimer.setBounds(200, 283, 229, 92);
-		frmSuperCoolRich.getContentPane().add(pnlElapsedTimer);
-		pnlElapsedTimer.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
 		rbtTimeInRoom = new JRadioButton("Display time in room (changes per room)");
 		rbtTimeInRoom.addActionListener(saveSettingsListener);
+		pnlElapsedTimer.setLayout(new BoxLayout(pnlElapsedTimer, BoxLayout.Y_AXIS));
 		buttonGroup.add(rbtTimeInRoom);
 		pnlElapsedTimer.add(rbtTimeInRoom);
 
@@ -235,42 +238,49 @@ public class MKWiiPresenceGUI {
 		buttonGroup.add(rbtTimeOverall);
 		pnlElapsedTimer.add(rbtTimeOverall);
 
+		JPanel panel_2 = new JPanel();
+		frmSuperCoolRich.getContentPane().add(panel_2, BorderLayout.SOUTH);
+		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
+
+		JLabel lblPreview = new JLabel("Preview");
+		lblPreview.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_2.add(lblPreview);
+		lblPreview.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPreview.setFont(new Font("Tahoma", Font.PLAIN, 18));
+
+		panel_3 = new JPanel();
+		panel_2.add(panel_3);
+
+		JLabel lblPreviewImage = new JLabel("");
+		panel_3.add(lblPreviewImage);
+		lblPreviewImage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblPreviewImage.setToolTipText("Mario Kart Wii");
+		BufferedImage wPic = ImageIO.read(this.getClass().getResource("resources/previewIcon.png"));
+		lblPreviewImage.setIcon(new ImageIcon(wPic));
+
+		lblPreviewText = new JLabel("PreviewText");
+		panel_3.add(lblPreviewText);
+		lblPreviewText.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblPreviewText.setVerticalAlignment(SwingConstants.TOP);
+
+		JLabel lblDiscordIcon = new JLabel("");
+		lblDiscordIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_2.add(lblDiscordIcon);
+
 		JButton btnBeginRichPresence = new JButton("Begin Rich Presence");
+		btnBeginRichPresence.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_2.add(btnBeginRichPresence);
 		btnBeginRichPresence.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mainInst.setCurrentSettings(getSettings());
 				mainInst.requestNewPresence();
 			}
 		});
-		btnBeginRichPresence.setBounds(10, 492, 419, 43);
-		frmSuperCoolRich.getContentPane().add(btnBeginRichPresence);
 
 		JLabel lblStateIdle = new JLabel("State: Idle");
+		lblStateIdle.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_2.add(lblStateIdle);
 		lblStateIdle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStateIdle.setBounds(10, 546, 419, 14);
-		frmSuperCoolRich.getContentPane().add(lblStateIdle);
-
-		JLabel lblPreview = new JLabel("Preview");
-		lblPreview.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPreview.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblPreview.setBounds(10, 386, 419, 31);
-		frmSuperCoolRich.getContentPane().add(lblPreview);
-
-		JLabel lblDiscordIcon = new JLabel("");
-		lblDiscordIcon.setBounds(45, 428, 46, 14);
-		frmSuperCoolRich.getContentPane().add(lblDiscordIcon);
-
-		JLabel lblPreviewImage = new JLabel("");
-		lblPreviewImage.setToolTipText("Mario Kart Wii");
-		BufferedImage wPic = ImageIO.read(this.getClass().getResource("resources/previewIcon.png"));
-		lblPreviewImage.setIcon(new ImageIcon(wPic));
-		lblPreviewImage.setBounds(55, 417, 64, 64);
-		frmSuperCoolRich.getContentPane().add(lblPreviewImage);
-
-		lblPreviewText = new JLabel("PreviewText");
-		lblPreviewText.setVerticalAlignment(SwingConstants.TOP);
-		lblPreviewText.setBounds(129, 428, 285, 53);
-		frmSuperCoolRich.getContentPane().add(lblPreviewText);
 
 		// Set up settings and preview
 		PresenceSettings settings = getSettings();
@@ -280,14 +290,14 @@ public class MKWiiPresenceGUI {
 
 		mainInst.setCurrentSettings(getSettings());
 	}
-	
+
 	class FriendCodeListener implements DocumentListener {
 		JTextField nextField;
-		
+
 		public FriendCodeListener(JTextField next) {
 			nextField = next;
 		}
-		
+
 		public void changedUpdate(DocumentEvent e) {
 			updatedSettings();
 			if (e.getDocument().getLength() >= 4) {

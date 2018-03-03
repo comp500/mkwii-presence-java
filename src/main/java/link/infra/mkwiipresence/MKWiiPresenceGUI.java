@@ -34,6 +34,8 @@ import javax.swing.text.PlainDocument;
 
 import link.infra.mkwiipresence.WiimmMessages.WiimmMember;
 import link.infra.mkwiipresence.WiimmMessages.WiimmRoom;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class MKWiiPresenceGUI {
 
@@ -138,6 +140,11 @@ public class MKWiiPresenceGUI {
 		pnlUpdateRate.setLayout(null);
 
 		sliderUpdateRate = new JSlider();
+		sliderUpdateRate.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				updatedSettings();
+			}
+		});
 		sliderUpdateRate.setValue(3);
 		sliderUpdateRate.setBounds(6, 16, 60, 244);
 		sliderUpdateRate.setMaximum(4);

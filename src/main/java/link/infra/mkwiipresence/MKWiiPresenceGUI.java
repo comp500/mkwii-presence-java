@@ -340,19 +340,32 @@ public class MKWiiPresenceGUI {
 			sb.append(doc.getText(0, doc.getLength()));
 			sb.insert(offset, string);
 
-			if (test(sb.toString())) {
+			if (paste(string) || test(sb.toString())) {
 				super.insertString(fb, offset, string, attr);
 			} else {
 				// warn the user and don't allow the insert
 			}
 		}
+		
+		private boolean paste(String text) {
+			// Allow pasting
+			String replacedText = text.replaceAll("\\D", "");
+			if (replacedText.length() == 12) {
+				tbxFC1.setText(replacedText.substring(0, 4));
+				tbxFC2.setText(replacedText.substring(4, 8));
+				tbxFC3.setText(replacedText.substring(8, 12));
+				return false;
+			}
+			return true;
+		}
 
 		private boolean test(String text) {
-			if (text.length() > 4)
-				return false;
 			// Allow null or ""
 			if (text == null || text.length() == 0)
 				return true;
+			
+			if (text.length() > 4)
+				return false;
 
 			try {
 				Integer.parseInt(text);
@@ -371,7 +384,7 @@ public class MKWiiPresenceGUI {
 			sb.append(doc.getText(0, doc.getLength()));
 			sb.replace(offset, offset + length, text);
 
-			if (test(sb.toString())) {
+			if (paste(text) || test(sb.toString())) {
 				super.replace(fb, offset, length, text, attrs);
 			} else {
 				// warn the user and don't allow the insert

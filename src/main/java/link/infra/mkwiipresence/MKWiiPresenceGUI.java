@@ -99,8 +99,9 @@ public class MKWiiPresenceGUI {
 		frmSuperCoolRich.getContentPane().setLayout(null);
 
 		JLabel lblUserSettings = new JLabel("User Settings");
+		lblUserSettings.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUserSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblUserSettings.setBounds(45, 11, 115, 31);
+		lblUserSettings.setBounds(10, 11, 180, 31);
 		frmSuperCoolRich.getContentPane().add(lblUserSettings);
 
 		JPanel pnlFriendCode = new JPanel();
@@ -179,8 +180,9 @@ public class MKWiiPresenceGUI {
 		pnlUpdateLabels.add(lblVeryFast);
 
 		lblRichPresenceSettings = new JLabel("Rich Presence Settings");
+		lblRichPresenceSettings.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRichPresenceSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblRichPresenceSettings.setBounds(227, 11, 187, 31);
+		lblRichPresenceSettings.setBounds(200, 11, 229, 31);
 		frmSuperCoolRich.getContentPane().add(lblRichPresenceSettings);
 
 		pnlDetailsLine = new JPanel();

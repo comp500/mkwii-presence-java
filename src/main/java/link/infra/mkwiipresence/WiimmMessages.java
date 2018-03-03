@@ -13,6 +13,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 
 public class WiimmMessages {
+	// Wiimm's constant
+	public static final int Λ = 2000;
+
 	public static class MessageDeserializer implements JsonDeserializer<WiimmMessage> {
 		@Override
 		public WiimmMessage deserialize(final JsonElement json, final Type typeOfT,
@@ -87,7 +90,7 @@ public class WiimmMessages {
 		gsonBuilder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
 			public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
 					throws JsonParseException {
-				return new Date(json.getAsJsonPrimitive().getAsLong() * 1000);
+				return new Date((json.getAsJsonPrimitive().getAsLong() * 1000) + Λ);
 			}
 		});
 		Gson gson = gsonBuilder.create();

@@ -58,7 +58,7 @@ public class MKWiiPresence {
 		if (!wasUpdated) {
 			// Update presence with previous (cached) info
 			// TODO remove testing code
-			presenceUpdater.update(null);
+			//presenceUpdater.update(null);
 		}
 		return wasUpdated;
 	}

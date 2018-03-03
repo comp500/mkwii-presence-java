@@ -14,14 +14,16 @@ public class PresenceMessage {
 	public String smallImageKey;
 	
 	// Abuse of statics
-	public static int previousVR;
-	public static int previousBR;
+	// TODO STOP ABUSING STATICS
+	private static int previousVR;
+	private static int previousBR;
+	private static Date roomTime = null;
+	private static Date gameTime = null;
 	
 	//	Let's store stuff!
 	ArrayList<String> detailsArray = new ArrayList<String>();
 	ArrayList<String> stateArray = new ArrayList<String>();
 	
-	@SuppressWarnings("unused")
 	public PresenceMessage(WiimmRoom room, PresenceSettings settings) {
 		WiimmMember member = room.getPlayer(settings.friendCode);
 		
@@ -93,12 +95,11 @@ public class PresenceMessage {
 		
 		if (settings.timerSetting == PresenceSettings.TimerSettingType.TIMEINRACE) {
 			startTimestamp = room.raceStart;
+			System.out.println(startTimestamp.toString());
 		}
 		
 		if (settings.timerSetting == PresenceSettings.TimerSettingType.TIMEINROOM) {
-			Date roomTime = null;
-			
-			//If no room, stop timer
+			// If no room, stop timer
 			if (room.raceStart == null) {
 				startTimestamp = null;
 			}
@@ -112,8 +113,6 @@ public class PresenceMessage {
 		}
 		
 		if (settings.timerSetting == PresenceSettings.TimerSettingType.OVERALLTIME) {
-			Date gameTime = null;
-			
 			if (gameTime == null) {
 				gameTime = new Date(System.currentTimeMillis() * 1000);
 			} else {

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -24,6 +25,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -85,6 +88,26 @@ public class MKWiiPresenceGUI {
 			}
 		};
 		
+		DocumentListener docListener = new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updatedSettings();
+				if (e.getDocument().getLength() >= 4) {
+                    KeyboardFocusManager.getCurrentKeyboardFocusManager().focusNextComponent();
+                }
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				updatedSettings();
+			}
+
+			public void insertUpdate(DocumentEvent e) {
+				updatedSettings();
+				if (e.getDocument().getLength() >= 4) {
+                    KeyboardFocusManager.getCurrentKeyboardFocusManager().focusNextComponent();
+                }
+			}
+		};
+		
 		frmSuperCoolRich = new JFrame();
 		frmSuperCoolRich.setTitle("super cool rich presence lul");
 		frmSuperCoolRich.setResizable(false);
@@ -106,18 +129,21 @@ public class MKWiiPresenceGUI {
 		tbxFC1 = new JTextField();
 		tbxFC1.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC1.setColumns(10);
+		tbxFC1.getDocument().addDocumentListener(docListener);
 		((PlainDocument) tbxFC1.getDocument()).setDocumentFilter(new FriendCodeFilter());
 		pnlFriendCode.add(tbxFC1);
 		
 		tbxFC2 = new JTextField();
 		tbxFC2.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC2.setColumns(10);
+		tbxFC2.getDocument().addDocumentListener(docListener);
 		((PlainDocument) tbxFC2.getDocument()).setDocumentFilter(new FriendCodeFilter());
 		pnlFriendCode.add(tbxFC2);
 		
 		tbxFC3 = new JTextField();
 		tbxFC3.setHorizontalAlignment(SwingConstants.CENTER);
 		tbxFC3.setColumns(10);
+		tbxFC3.getDocument().addDocumentListener(docListener);
 		((PlainDocument) tbxFC3.getDocument()).setDocumentFilter(new FriendCodeFilter());
 		pnlFriendCode.add(tbxFC3);
 		
@@ -290,7 +316,6 @@ public class MKWiiPresenceGUI {
 
 			if (test(sb.toString())) {
 				super.insertString(fb, offset, string, attr);
-				updatedSettings();
 			} else {
 				// warn the user and don't allow the insert
 			}
@@ -320,11 +345,9 @@ public class MKWiiPresenceGUI {
 
 			if (test(sb.toString())) {
 				super.replace(fb, offset, length, text, attrs);
-				updatedSettings();
 			} else {
 				// warn the user and don't allow the insert
 			}
-
 		}
 
 		@Override
@@ -336,7 +359,6 @@ public class MKWiiPresenceGUI {
 
 			if (test(sb.toString())) {
 				super.remove(fb, offset, length);
-				updatedSettings();
 			} else {
 				// warn the user and don't allow the insert
 			}

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
@@ -23,6 +24,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
+import link.infra.mkwiipresence.WiimmMessages.WiimmMember;
+import link.infra.mkwiipresence.WiimmMessages.WiimmRoom;
 
 public class MKWiiPresenceGUI {
 
@@ -53,6 +57,7 @@ public class MKWiiPresenceGUI {
 	private JSlider sliderUpdateRate;
 	
 	private MKWiiPresence mainInst;
+	private JLabel lblPreviewText;
 
 	/**
 	 * Create the application.
@@ -61,7 +66,7 @@ public class MKWiiPresenceGUI {
 	public MKWiiPresenceGUI(MKWiiPresence mainInst) throws IOException {
 		this.mainInst = mainInst;
 		initialize();
-		this.frmSuperCoolRich.setVisible(true);
+		frmSuperCoolRich.setVisible(true);
 	}
 
 	/**
@@ -71,6 +76,11 @@ public class MKWiiPresenceGUI {
 	private void initialize() throws IOException {
 		ActionListener saveSettingsListener = new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				PresenceSettings settings = getSettings();
+				WiimmRoom room = createPreviewRoom(settings);
+				PresenceMessage previewMessage = new PresenceMessage(room, settings);
+				lblPreviewText.setText(previewMessage.detailsLine);
+				
 				mainInst.setCurrentSettings(getSettings());
 				// Save
 				// Update preview
@@ -251,6 +261,37 @@ public class MKWiiPresenceGUI {
 		lblPreviewImage.setIcon(new ImageIcon(wPic));
 		lblPreviewImage.setBounds(55, 417, 64, 64);
 		frmSuperCoolRich.getContentPane().add(lblPreviewImage);
+		
+		lblPreviewText = new JLabel("PreviewText");
+		lblPreviewText.setBounds(129, 428, 46, 14);
+		frmSuperCoolRich.getContentPane().add(lblPreviewText);
+	}
+	
+	private WiimmRoom createPreviewRoom(PresenceSettings settings) {
+		WiimmRoom room = new WiimmRoom();
+		WiimmMember member = new WiimmMember();
+		
+		room.roomName = "ROOM";
+		room.roomStart = new Date();
+		room.raceStart = new Date();
+		room.numberOfRaces = 1;
+		room.numberOfMembers = 1;
+		room.numberOfPlayers = 1;
+		
+		member.friendCode = settings.friendCode;
+		member.names = new String[2];
+		member.names[0] = "Player"; // TODO use room from cache?
+		member.names[1] = null;
+		member.gameRegion = "vs";
+		member.userRegion = "Eur/1";
+		member.battlePoints = 2357;
+		member.versusPoints = 4325;
+		member.userRaces = 1;
+		
+		room.members = new WiimmMember[1];
+		room.members[0] = member;
+		
+		return room;
 	}
 	
 	public PresenceSettings getSettings() {

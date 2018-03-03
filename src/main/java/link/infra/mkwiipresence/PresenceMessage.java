@@ -30,13 +30,13 @@ public class PresenceMessage {
 		}
 		
 		if (settings.displayMiiName == true) {
-			detailsArray.add(String.format("%d", member.names[0]));
+			detailsArray.add(String.format("%s", member.names[0]));
 		}
 		if (settings.displayFriendCode == true) {
-			detailsArray.add(String.format("[%d]", member.friendCode));
+			detailsArray.add(String.format("[%s]", member.friendCode));
 		}
 		if (settings.displayRegion == true) {
-			detailsArray.add(String.format("[%d]", member.userRegion));
+			detailsArray.add(String.format("[%s]", member.userRegion));
 		}
 		
 		if (settings.displayVRBR == true) {

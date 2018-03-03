@@ -40,9 +40,9 @@ public class MKWiiPresenceGUI {
 	private JPanel pnlDetailsLine;
 	private JPanel pnlElapsedTimer;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JCheckBox cbxDiscrepencyVRBR;
+	private JCheckBox cbxDiscrepancyVRBR;
 	private JCheckBox cbxPlayersInRoom;
-	private JCheckBox cbxDisplayNumberOf;
+	private JCheckBox cbxDisplayNumRaces;
 	private JCheckBox cbxMiiName;
 	private JCheckBox cbxFriendCode;
 	private JCheckBox cbxRegion;
@@ -174,15 +174,15 @@ public class MKWiiPresenceGUI {
 		cbxVRBR.setSelected(true);
 		pnlStateLine.add(cbxVRBR);
 		
-		cbxDiscrepencyVRBR = new JCheckBox("Display discrepancy in VR/BR");
-		pnlStateLine.add(cbxDiscrepencyVRBR);
+		cbxDiscrepancyVRBR = new JCheckBox("Display discrepancy in VR/BR");
+		pnlStateLine.add(cbxDiscrepancyVRBR);
 		
 		cbxPlayersInRoom = new JCheckBox("Display number of players in room");
 		cbxPlayersInRoom.setSelected(true);
 		pnlStateLine.add(cbxPlayersInRoom);
 		
-		cbxDisplayNumberOf = new JCheckBox("Display number of races played");
-		pnlStateLine.add(cbxDisplayNumberOf);
+		cbxDisplayNumRaces = new JCheckBox("Display number of races played");
+		pnlStateLine.add(cbxDisplayNumRaces);
 		
 		pnlElapsedTimer = new JPanel();
 		pnlElapsedTimer.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Elapsed Timer", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -242,9 +242,9 @@ public class MKWiiPresenceGUI {
 		settings.displayFriendCode = cbxFriendCode.isSelected();
 		settings.displayRegion = cbxRegion.isSelected();
 		settings.displayVRBR = cbxVRBR.isSelected();
-		settings.displayDiscrepancyVRBR = cbxDiscrepencyVRBR.isSelected();
+		settings.displayDiscrepancyVRBR = cbxDiscrepancyVRBR.isSelected();
 		settings.displayNumPlayers = cbxPlayersInRoom.isSelected();
-		settings.displayNumRaces = cbxDisplayNumberOf.isSelected();
+		settings.displayNumRaces = cbxDisplayNumRaces.isSelected();
 		
 		if (rbtTimeInRoom.isSelected()) {
 			settings.timerSetting = PresenceSettings.TimerSettingType.TIMEINROOM;
@@ -262,5 +262,41 @@ public class MKWiiPresenceGUI {
 		
 		settings.updateRate = sliderUpdateRate.getValue();
 		return settings;
+	}
+	
+	public void loadSettings(PresenceSettings settings) {
+		cbxMiiName.setSelected(settings.displayMiiName);
+		cbxFriendCode.setSelected(settings.displayFriendCode);
+		cbxRegion.setSelected(settings.displayRegion);
+		cbxVRBR.setSelected(settings.displayVRBR);
+		cbxDiscrepancyVRBR.setSelected(settings.displayDiscrepancyVRBR);
+		cbxPlayersInRoom.setSelected(settings.displayNumPlayers);
+		cbxDisplayNumRaces.setSelected(settings.displayNumRaces);
+		
+		rbtTimeInRoom.setSelected(false);
+		rbtTimeInRace.setSelected(false);
+		rbtTimeOverall.setSelected(false);
+		switch (settings.timerSetting) {
+			case TIMEINROOM:
+				rbtTimeInRoom.setSelected(true);
+				break;
+			case OVERALLTIME:
+				rbtTimeOverall.setSelected(true);
+				break;
+			case TIMEINRACE:
+				rbtTimeInRace.setSelected(true);
+				break;
+			default:
+				break;
+		}
+		
+		String[] friendCodeSplit = settings.friendCode.split("-");
+		if (friendCodeSplit.length >= 3) {
+			tbxFC1.setText(friendCodeSplit[0]);
+			tbxFC2.setText(friendCodeSplit[1]);
+			tbxFC3.setText(friendCodeSplit[2]);
+		}
+		
+		sliderUpdateRate.setValue(settings.updateRate);
 	}
 }

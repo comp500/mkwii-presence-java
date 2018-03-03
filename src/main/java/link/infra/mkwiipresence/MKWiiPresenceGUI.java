@@ -69,6 +69,14 @@ public class MKWiiPresenceGUI {
 	 * @throws IOException 
 	 */
 	private void initialize() throws IOException {
+		ActionListener saveSettingsListener = new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mainInst.setCurrentSettings(getSettings());
+				// Save
+				// Update preview
+			}
+		};
+		
 		frmSuperCoolRich = new JFrame();
 		frmSuperCoolRich.setTitle("super cool rich presence lul");
 		frmSuperCoolRich.setResizable(false);
@@ -154,14 +162,17 @@ public class MKWiiPresenceGUI {
 		pnlDetailsLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
 		cbxMiiName = new JCheckBox("Display Mii name");
+		cbxMiiName.addActionListener(saveSettingsListener);
 		cbxMiiName.setSelected(true);
 		pnlDetailsLine.add(cbxMiiName);
 		
 		cbxFriendCode = new JCheckBox("Display friend code");
+		cbxFriendCode.addActionListener(saveSettingsListener);
 		cbxFriendCode.setSelected(true);
 		pnlDetailsLine.add(cbxFriendCode);
 		
 		cbxRegion = new JCheckBox("Display your region");
+		cbxRegion.addActionListener(saveSettingsListener);
 		pnlDetailsLine.add(cbxRegion);
 		
 		JPanel pnlStateLine = new JPanel();
@@ -171,17 +182,21 @@ public class MKWiiPresenceGUI {
 		pnlStateLine.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
 		cbxVRBR = new JCheckBox("Display VR/BR");
+		cbxVRBR.addActionListener(saveSettingsListener);
 		cbxVRBR.setSelected(true);
 		pnlStateLine.add(cbxVRBR);
 		
 		cbxDiscrepancyVRBR = new JCheckBox("Display discrepancy in VR/BR");
+		cbxDiscrepancyVRBR.addActionListener(saveSettingsListener);
 		pnlStateLine.add(cbxDiscrepancyVRBR);
 		
 		cbxPlayersInRoom = new JCheckBox("Display number of players in room");
+		cbxPlayersInRoom.addActionListener(saveSettingsListener);
 		cbxPlayersInRoom.setSelected(true);
 		pnlStateLine.add(cbxPlayersInRoom);
 		
 		cbxDisplayNumRaces = new JCheckBox("Display number of races played");
+		cbxDisplayNumRaces.addActionListener(saveSettingsListener);
 		pnlStateLine.add(cbxDisplayNumRaces);
 		
 		pnlElapsedTimer = new JPanel();
@@ -191,15 +206,18 @@ public class MKWiiPresenceGUI {
 		pnlElapsedTimer.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
 		rbtTimeInRoom = new JRadioButton("Display time in room (changes per room)");
+		rbtTimeInRoom.addActionListener(saveSettingsListener);
 		buttonGroup.add(rbtTimeInRoom);
 		pnlElapsedTimer.add(rbtTimeInRoom);
 		
 		rbtTimeInRace = new JRadioButton("Display time for each race");
+		rbtTimeInRace.addActionListener(saveSettingsListener);
 		buttonGroup.add(rbtTimeInRace);
 		rbtTimeInRace.setSelected(true);
 		pnlElapsedTimer.add(rbtTimeInRace);
 		
 		rbtTimeOverall = new JRadioButton("Display overall play time");
+		rbtTimeOverall.addActionListener(saveSettingsListener);
 		buttonGroup.add(rbtTimeOverall);
 		pnlElapsedTimer.add(rbtTimeOverall);
 		

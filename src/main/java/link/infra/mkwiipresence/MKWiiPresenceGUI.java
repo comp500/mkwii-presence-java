@@ -50,7 +50,7 @@ public class MKWiiPresenceGUI {
 	private JLabel lblRichPresenceSettings;
 	private JPanel pnlDetailsLine;
 	private JPanel pnlElapsedTimer;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup timerButtonGroup = new ButtonGroup();
 	private JCheckBox cbxDiscrepancyVRBR;
 	private JCheckBox cbxPlayersInRoom;
 	private JCheckBox cbxDisplayNumRaces;
@@ -65,7 +65,7 @@ public class MKWiiPresenceGUI {
 
 	private MKWiiPresence mainInst;
 	private JLabel lblPreviewText;
-	private JPanel panel_3;
+	private JPanel previewPanel;
 
 	/**
 	 * Create the application.
@@ -96,18 +96,18 @@ public class MKWiiPresenceGUI {
 		frmSuperCoolRich.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSuperCoolRich.getContentPane().setLayout(new BorderLayout(0, 0));
 
-		JPanel panel = new JPanel();
-		frmSuperCoolRich.getContentPane().add(panel, BorderLayout.WEST);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		JPanel userSettingsPanel = new JPanel();
+		frmSuperCoolRich.getContentPane().add(userSettingsPanel, BorderLayout.WEST);
+		userSettingsPanel.setLayout(new BoxLayout(userSettingsPanel, BoxLayout.Y_AXIS));
 
 		JLabel lblUserSettings = new JLabel("User Settings");
 		lblUserSettings.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel.add(lblUserSettings);
+		userSettingsPanel.add(lblUserSettings);
 		lblUserSettings.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUserSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		JPanel pnlFriendCode = new JPanel();
-		panel.add(pnlFriendCode);
+		userSettingsPanel.add(pnlFriendCode);
 		pnlFriendCode
 				.setBorder(new TitledBorder(null, "Friend Code", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
@@ -135,7 +135,7 @@ public class MKWiiPresenceGUI {
 		tbxFC3.getDocument().addDocumentListener(new FriendCodeListener(null));
 
 		pnlUpdateRate = new JPanel();
-		panel.add(pnlUpdateRate);
+		userSettingsPanel.add(pnlUpdateRate);
 		pnlUpdateRate.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Update Rate",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
@@ -163,17 +163,17 @@ public class MKWiiPresenceGUI {
 		pnlUpdateRate.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pnlUpdateRate.add(sliderUpdateRate);
 
-		JPanel panel_1 = new JPanel();
-		frmSuperCoolRich.getContentPane().add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+		JPanel richPresencePanel = new JPanel();
+		frmSuperCoolRich.getContentPane().add(richPresencePanel, BorderLayout.CENTER);
+		richPresencePanel.setLayout(new BoxLayout(richPresencePanel, BoxLayout.Y_AXIS));
 		
 				lblRichPresenceSettings = new JLabel("Rich Presence Settings");
-				panel_1.add(lblRichPresenceSettings);
+				richPresencePanel.add(lblRichPresenceSettings);
 				lblRichPresenceSettings.setHorizontalAlignment(SwingConstants.CENTER);
 				lblRichPresenceSettings.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		pnlDetailsLine = new JPanel();
-		panel_1.add(pnlDetailsLine);
+		richPresencePanel.add(pnlDetailsLine);
 		pnlDetailsLine.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Details Line",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
@@ -193,7 +193,7 @@ public class MKWiiPresenceGUI {
 		pnlDetailsLine.add(cbxRegion);
 
 		JPanel pnlStateLine = new JPanel();
-		panel_1.add(pnlStateLine);
+		richPresencePanel.add(pnlStateLine);
 		pnlStateLine.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "State Line",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
@@ -217,59 +217,59 @@ public class MKWiiPresenceGUI {
 		pnlStateLine.add(cbxDisplayNumRaces);
 
 		pnlElapsedTimer = new JPanel();
-		panel_1.add(pnlElapsedTimer);
+		richPresencePanel.add(pnlElapsedTimer);
 		pnlElapsedTimer.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Elapsed Timer",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
 		rbtTimeInRoom = new JRadioButton("Display time in room (changes per room)");
 		rbtTimeInRoom.addActionListener(saveSettingsListener);
 		pnlElapsedTimer.setLayout(new BoxLayout(pnlElapsedTimer, BoxLayout.Y_AXIS));
-		buttonGroup.add(rbtTimeInRoom);
+		timerButtonGroup.add(rbtTimeInRoom);
 		pnlElapsedTimer.add(rbtTimeInRoom);
 
 		rbtTimeInRace = new JRadioButton("Display time for each race");
 		rbtTimeInRace.addActionListener(saveSettingsListener);
-		buttonGroup.add(rbtTimeInRace);
+		timerButtonGroup.add(rbtTimeInRace);
 		rbtTimeInRace.setSelected(true);
 		pnlElapsedTimer.add(rbtTimeInRace);
 
 		rbtTimeOverall = new JRadioButton("Display overall play time");
 		rbtTimeOverall.addActionListener(saveSettingsListener);
-		buttonGroup.add(rbtTimeOverall);
+		timerButtonGroup.add(rbtTimeOverall);
 		pnlElapsedTimer.add(rbtTimeOverall);
 
-		JPanel panel_2 = new JPanel();
-		frmSuperCoolRich.getContentPane().add(panel_2, BorderLayout.SOUTH);
-		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
+		JPanel finalPanel = new JPanel();
+		frmSuperCoolRich.getContentPane().add(finalPanel, BorderLayout.SOUTH);
+		finalPanel.setLayout(new BoxLayout(finalPanel, BoxLayout.Y_AXIS));
 
 		JLabel lblPreview = new JLabel("Preview");
 		lblPreview.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel_2.add(lblPreview);
+		finalPanel.add(lblPreview);
 		lblPreview.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPreview.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-		panel_3 = new JPanel();
-		panel_2.add(panel_3);
+		previewPanel = new JPanel();
+		finalPanel.add(previewPanel);
 
 		JLabel lblPreviewImage = new JLabel("");
-		panel_3.add(lblPreviewImage);
+		previewPanel.add(lblPreviewImage);
 		lblPreviewImage.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblPreviewImage.setToolTipText("Mario Kart Wii");
 		BufferedImage wPic = ImageIO.read(this.getClass().getResource("resources/previewIcon.png"));
 		lblPreviewImage.setIcon(new ImageIcon(wPic));
 
 		lblPreviewText = new JLabel("PreviewText");
-		panel_3.add(lblPreviewText);
+		previewPanel.add(lblPreviewText);
 		lblPreviewText.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblPreviewText.setVerticalAlignment(SwingConstants.TOP);
 
 		JLabel lblDiscordIcon = new JLabel("");
 		lblDiscordIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel_2.add(lblDiscordIcon);
+		finalPanel.add(lblDiscordIcon);
 
 		JButton btnBeginRichPresence = new JButton("Begin Rich Presence");
 		btnBeginRichPresence.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel_2.add(btnBeginRichPresence);
+		finalPanel.add(btnBeginRichPresence);
 		btnBeginRichPresence.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mainInst.setCurrentSettings(getSettings());
@@ -279,7 +279,7 @@ public class MKWiiPresenceGUI {
 
 		JLabel lblStateIdle = new JLabel("State: Idle");
 		lblStateIdle.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel_2.add(lblStateIdle);
+		finalPanel.add(lblStateIdle);
 		lblStateIdle.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// Set up settings and preview

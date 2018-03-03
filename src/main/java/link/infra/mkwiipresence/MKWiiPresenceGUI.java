@@ -39,6 +39,7 @@ import javax.swing.text.PlainDocument;
 
 import link.infra.mkwiipresence.WiimmMessages.WiimmMember;
 import link.infra.mkwiipresence.WiimmMessages.WiimmRoom;
+import java.awt.Toolkit;
 
 public class MKWiiPresenceGUI {
 
@@ -91,6 +92,7 @@ public class MKWiiPresenceGUI {
 		};
 
 		frmSuperCoolRich = new JFrame();
+		frmSuperCoolRich.setIconImage(Toolkit.getDefaultToolkit().getImage(MKWiiPresenceGUI.class.getResource("/link/infra/mkwiipresence/resources/logo.png")));
 		frmSuperCoolRich.setTitle("super cool rich presence lul");
 		frmSuperCoolRich.setBounds(100, 100, 425, 515);
 		frmSuperCoolRich.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

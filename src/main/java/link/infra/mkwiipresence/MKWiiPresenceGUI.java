@@ -40,6 +40,7 @@ import javax.swing.text.PlainDocument;
 import link.infra.mkwiipresence.WiimmMessages.WiimmMember;
 import link.infra.mkwiipresence.WiimmMessages.WiimmRoom;
 import java.awt.Toolkit;
+import javax.swing.border.EmptyBorder;
 
 public class MKWiiPresenceGUI {
 
@@ -94,11 +95,11 @@ public class MKWiiPresenceGUI {
 		frmSuperCoolRich = new JFrame();
 		frmSuperCoolRich.setIconImage(Toolkit.getDefaultToolkit().getImage(MKWiiPresenceGUI.class.getResource("/link/infra/mkwiipresence/resources/logo.png")));
 		frmSuperCoolRich.setTitle("super cool rich presence lul");
-		frmSuperCoolRich.setBounds(100, 100, 425, 515);
 		frmSuperCoolRich.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSuperCoolRich.getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel userSettingsPanel = new JPanel();
+		userSettingsPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frmSuperCoolRich.getContentPane().add(userSettingsPanel, BorderLayout.WEST);
 		userSettingsPanel.setLayout(new BoxLayout(userSettingsPanel, BoxLayout.Y_AXIS));
 
@@ -166,6 +167,7 @@ public class MKWiiPresenceGUI {
 		pnlUpdateRate.add(sliderUpdateRate);
 
 		JPanel richPresencePanel = new JPanel();
+		richPresencePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frmSuperCoolRich.getContentPane().add(richPresencePanel, BorderLayout.CENTER);
 		richPresencePanel.setLayout(new BoxLayout(richPresencePanel, BoxLayout.Y_AXIS));
 		
@@ -241,6 +243,7 @@ public class MKWiiPresenceGUI {
 		pnlElapsedTimer.add(rbtTimeOverall);
 
 		JPanel finalPanel = new JPanel();
+		finalPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frmSuperCoolRich.getContentPane().add(finalPanel, BorderLayout.SOUTH);
 		finalPanel.setLayout(new BoxLayout(finalPanel, BoxLayout.Y_AXIS));
 
@@ -291,6 +294,8 @@ public class MKWiiPresenceGUI {
 		lblPreviewText.setText("<html>" + previewMessage.detailsLine + "<br>" + previewMessage.stateLine);
 
 		mainInst.setCurrentSettings(getSettings());
+		
+		frmSuperCoolRich.pack();
 	}
 
 	class FriendCodeListener implements DocumentListener {
